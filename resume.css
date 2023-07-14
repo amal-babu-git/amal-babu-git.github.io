@@ -1,0 +1,71 @@
+body{
+    margin: 2px;
+}
+
+.center-text{
+    text-align: center;
+}
+
+.header-section{
+
+}
+
+#heading{
+
+}
+.subheading{
+    background-color: #d2e4e1;
+    padding: 12px;
+}
+
+.ul-list{
+    padding: 20px;
+
+}
+
+li{
+    padding: 5px;
+}
+
+.skill-section{
+    font-size: medium;
+}
+
+table{
+    border-collapse: collapse;
+    padding: 15px;
+    width: 90%;
+
+}
+
+th,td{
+    padding: 10px;
+}
+.single-project{
+    background-color: rgb(232, 236, 236);
+}
+
+.bottom-section{
+    margin-bottom: 10px;
+}
+
+.container{
+    
+        margin: 25px;
+
+
+}
+
+
+.card{
+    align-self: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    margin:100px;
+    padding: 10px;
+}
+
+.single-project{
+    padding: 1px;
+    margin: 5px;
+}
