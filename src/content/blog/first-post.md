@@ -1,16 +1,286 @@
 ---
-title: 'First post'
-description: 'Lorem ipsum dolor sit amet'
-pubDate: 'Jul 08 2022'
+title: 'FastAPI Admin CLI blog'
+description: 'Fastapi admin cli'
+pubDate: 'Jun 30 2025'
 heroImage: '/blog-placeholder-3.jpg'
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+# FastAPI Admin CLI
 
-Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc. Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra massa massa ultricies mi.
+A Django-inspired CLI tool for managing FastAPI applications with a modular structure. This tool helps developers quickly scaffold and manage FastAPI projects with a clean, organized architecture.
 
-Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
+[![PyPI version](https://badge.fury.io/py/fastapi-admin-cli.svg)](https://badge.fury.io/py/fastapi-admin-cli)
+[![Python versions](https://img.shields.io/pypi/pyversions/fastapi-admin.svg)](https://pypi.org/project/fastapi-admin-cli/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id cursus metus aliquam eleifend mi.
+📚 **Documentation**: [https://amal-babu-git.github.io/fastapi-admin-cli-docs/](https://amal-babu-git.github.io/fastapi-admin-cli-docs/)
 
-Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
+## Demonstration
+
+The demonstration shows how to:
+- Install the package
+- Create a new project
+- Create apps within the project
+- Use Docker integration
+- Set up database migrations
+- Configure local development
+
+## Available Commands
+
+| Command                     | Description                                      |
+|-----------------------------|--------------------------------------------------|
+| `fastapi-admin startproject`| Create a new FastAPI project                     |
+| `fastapi-admin startapp`    | Create a new app within a FastAPI project        |
+| `fastapi-admin docker build`| Build Docker containers                          |
+| `fastapi-admin docker run`  | Run Docker containers                            |
+| `fastapi-admin docker down` | Stop and remove Docker containers                |
+| `fastapi-admin docker cmd`  | Run custom Docker commands                       |
+| `fastapi-admin db makemigrations` | Create new database migrations             |
+| `fastapi-admin db migrate`  | Apply database migrations                        |
+| `fastapi-admin db shell`    | Open a shell in the API container                |
+| `fastapi-admin createsuperuser` | Create a superuser for the admin panel       |
+| `fastapi-admin shell`       | Launch a shell inside a Docker container         |
+
+## Features
+
+- 🚀 **Project Scaffolding**: Create well-structured FastAPI projects with a single command
+- 📦 **App Management**: Generate modular apps within your project
+- 🐳 **Docker Integration**: Built-in Docker support with commands for building and running containers
+- 🔄 **Database Migrations**: Easy database migration commands using Alembic
+- 🛠️ **Developer Tools**: Shell access to Docker containers and more
+
+## Installation
+
+Install the package from PyPI:
+
+```bash
+pip install fastapi-admin-cli
+```
+
+## Usage
+
+### Create a New Project
+
+```bash
+fastapi-admin startproject myproject
+cd myproject
+```
+
+This creates a new FastAPI project with the following structure:
+- Docker configuration
+- Database migration setup with Alembic
+- Environment variable management
+- Modular app structure
+
+### Create a New App
+
+```bash
+# Make sure you're in the project directory
+fastapi-admin startapp blog
+```
+
+This creates a new app with the following files:
+- `models.py`: SQLAlchemy models
+- `schemas.py`: Pydantic schemas
+- `routes.py`: FastAPI routes
+- `services.py`: Business logic
+- `admin.py`: Admin interface configuration
+
+### Docker Operations
+
+Build, run, and manage your application using Docker:
+
+```bash
+# Build Docker containers
+fastapi-admin docker build
+
+# Run Docker containers
+fastapi-admin docker run
+
+# Stop and remove Docker containers
+fastapi-admin docker down
+
+# Run custom Docker commands
+fastapi-admin docker cmd "logs"
+```
+
+### Database Migrations
+
+```bash
+# Create new migrations
+fastapi-admin db makemigrations -m "create users table"
+
+# Apply migrations
+fastapi-admin db migrate
+```
+
+For other migration and related commands, use Alembic inside the Docker shell:
+
+```bash
+fastapi-admin shell
+alembic upgrade head
+```
+
+### Create a Superuser
+
+```bash
+fastapi-admin createsuperuser admin@example.com password123
+```
+
+This command creates a superuser for the admin panel. If the user already exists, it updates the user to superuser status.
+
+### Shell Access
+
+```bash
+# Open a shell in the API container
+fastapi-admin db shell
+
+# Launch a shell inside a Docker container
+fastapi-admin shell --container-name fastapi-app
+```
+
+## Tech Stack
+
+The FastAPI Admin CLI leverages the following technologies:
+
+- **FastAPI**: A modern, fast (high-performance) web framework for building APIs with Python.
+- **Modular Structure**: Projects are organized into modular apps for better scalability and maintainability.
+- **PostgreSQL**: Default database backend for robust and scalable data storage.
+- **SQLModel**: Combines the best of SQLAlchemy and Pydantic for ORM operations and schema validation.
+- **Alembic**: Database migration management tool for versioning and applying schema changes.
+- **FastAPI-Users**: Provides authentication with email and password by default, including JWT-based access and refresh tokens.
+- **SQL Admin**: Built-in admin panel for managing database models with admin authentication.
+
+### Authentication
+
+The project includes a pre-configured authentication module implemented with the fastapi-users package:
+
+- JWT authentication with access and refresh tokens
+- User registration, email verification, and password reset
+
+To use authentication in your routes:
+
+```python
+from app.auth.dependencies import current_active_user
+
+@router.get("/protected-route")
+def protected_route(user = Depends(current_active_user)):
+    return {"message": f"Hello, {user.email}!"}
+```
+
+### ORM Integration
+
+The project uses SQLModel for ORM operations, which combines the best of SQLAlchemy and Pydantic:
+
+- Type-safe models that work as both Pydantic models and SQLAlchemy models
+- Simplified query syntax while maintaining full SQLAlchemy power
+- Automatic schema validation
+
+Example model:
+
+```python
+from sqlmodel import Field, SQLModel
+from typing import Optional
+
+class User(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    email: str = Field(unique=True, index=True)
+    username: str = Field(unique=True, index=True)
+    hashed_password: str
+```
+
+### Admin Panel
+
+The project includes an SQLAlchemy admin panel for database management:
+
+- Automatic CRUD interface for all your models
+- Customizable admin views
+
+To access the admin panel, navigate to `/admin` after starting your application.
+
+## Project Structure
+
+The generated project follows a modular structure inspired by Django:
+
+```
+myproject/
+├── main.py                # Main application entry point
+├── manage.py              # CLI wrapper script
+├── docker/                # Docker configuration
+│   └── compose/           # Docker Compose files
+├── migrations/               # Database migrations
+├── auth/                 # Example app
+│   ├── __init__.py
+│   ├── models.py          # SQLAlchemy models
+│   ├── schemas.py         # Pydantic schemas
+│   ├── routes.py          # FastAPI routes
+│   ├── auth.py        # Business logic
+│   └── admin.py           # Admin interface configuration
+└── ...
+```
+
+## Environment Variables
+
+The project template includes an `env.txt` file that should be copied to `.env` for local development. The CLI will attempt to do this automatically when running `docker build`.
+
+## Using the Manage.py Wrapper
+
+Each generated project includes a `manage.py` wrapper that provides the same functionality as the fastapi-admin CLI:
+
+```bash
+python manage.py startapp new_app
+python manage.py docker build
+python manage.py docker run
+python manage.py db migrate
+python manage.py shell
+```
+
+## Local Development
+
+For local development without Docker:
+
+1. Create a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   # Or if you have uv installed
+   uv sync
+   ```
+
+3. Copy environment variables:
+   ```bash
+   cp env.txt .env
+   ```
+
+## Troubleshooting
+
+### Docker Issues
+
+If you encounter issues with Docker containers:
+
+1. Check if Docker is installed and running
+2. Verify the container name with `docker ps`
+3. Check Docker Compose configuration in `docker/compose/docker-compose.yml`
+
+### Database Migration Issues
+
+If you have problems with database migrations:
+
+1. Ensure the database container is running
+2. Check if Alembic is properly installed in the container
+3. Verify your database connection settings
+4. Try running migrations manually inside the container shell:
+   ```bash
+   fastapi-admin db shell
+   alembic upgrade head
+   ```
+5. Check Alembic logs for detailed error messages
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

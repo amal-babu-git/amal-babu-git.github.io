@@ -12,38 +12,62 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 	</head>
 	<body>
 		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
+		<div class="container mx-auto px-4">
+			<div class="hero bg-base-200 rounded-box my-8 py-10">
+				<div class="hero-content text-center">
+					<div class="max-w-md">
+						<h1 class="text-5xl font-bold text-primary">🧑‍🚀 Hello, Astronaut!</h1>
+						<p class="py-6">
+							Welcome to the official <a href="https://astro.build/" class="link link-primary">Astro</a> blog starter template. This
+							template serves as a lightweight, minimally-styled starting point for anyone looking to build
+							a personal website, blog, or portfolio with Astro.
+						</p>
+						<button class="btn btn-primary">Get Started</button>
+					</div>
+				</div>
+			</div>
+
+			<main class="prose lg:prose-xl mx-auto mb-10">
+				<div class="card bg-base-100 shadow-xl mb-8">
+					<div class="card-body">
+						<h2 class="card-title">About this template</h2>
+						<p>
+							This template comes with a few integrations already configured in your
+							<code class="bg-base-200 px-2 py-1 rounded">astro.config.mjs</code> file. You can customize your setup with
+							<a href="https://astro.build/integrations" class="link link-primary">Astro Integrations</a> to add tools like Tailwind,
+							React, or Vue to your project.
+						</p>
+						<div class="alert alert-info shadow-lg mt-4">
+							<div>
+								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+								<span>Have fun! If you get stuck, remember to <a href="https://docs.astro.build/" class="link">read the docs</a> or <a href="https://astro.build/chat" class="link">join us on Discord</a> to ask questions.</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card bg-base-100 shadow-xl">
+					<div class="card-body">
+						<h2 class="card-title">Getting Started</h2>
+						<p>Here are a few ideas on how to get started with the template:</p>
+						<ul class="menu bg-base-200 w-full p-2 rounded-box">
+							<li><a>Edit this page in <code>src/pages/index.astro</code></a></li>
+							<li><a>Edit the site header items in <code>src/components/Header.astro</code></a></li>
+							<li><a>Add your name to the footer in <code>src/components/Footer.astro</code></a></li>
+							<li><a>Check out the included blog posts in <code>src/content/blog/</code></a></li>
+							<li><a>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></a></li>
+						</ul>
+
+						<div class="divider">Other templates</div>
+						<p>
+							Looking for a blog template with a bit more personality? Check out
+							<a href="https://github.com/Charca/astro-blog-template" class="link link-primary">astro-blog-template</a>
+							by <a href="https://twitter.com/Charca" class="link">Maxi Ferreira</a>.
+						</p>
+					</div>
+				</div>
+			</main>
+		</div>
 		<Footer />
 	</body>
 </html>
