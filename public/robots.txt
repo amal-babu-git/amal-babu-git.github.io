@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://amalbabu.com/sitemap-index.xml

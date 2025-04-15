@@ -40,6 +40,10 @@ const PERSONAL_TITLE = "Amal Babu · ABK Datalab";
 			title={PERSONAL_TITLE}
 			description={SITE_DESCRIPTION}
 		/>
+		<meta
+			name="keywords"
+			content="Amal Babu, Full-Stack Development, Machine Learning, AI, Python, FastAPI, Django, React, Next.js, ComfyUI, LoRA Models, Web Development"
+		/>
 	</head>
 	<body>
 		<Header />
@@ -320,5 +324,23 @@ const PERSONAL_TITLE = "Amal Babu · ABK Datalab";
 			</main>
 		</div>
 		<Footer />
+
+		<!-- Structured data for better SEO -->
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "ProfilePage",
+				"mainEntity": {
+					"@type": "Person",
+					"name": "Amal Babu",
+					"url": "https://amalbabu.com",
+					"jobTitle": "Full-Stack Developer & AI Specialist",
+					"sameAs": [
+						"https://github.com/amal-babu-git",
+						"https://www.linkedin.com/in/amalbabudev"
+					]
+				}
+			}
+		</script>
 	</body>
 </html>
