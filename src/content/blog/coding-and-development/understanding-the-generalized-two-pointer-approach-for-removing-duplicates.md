@@ -3,6 +3,7 @@ title: 'Understanding the Generalized Two-Pointer Approach for Removing Duplicat
 description: 'A comprehensive guide to using the two-pointer technique for efficiently handling duplicates in sorted arrays'
 pubDate: 'Jan 8 2024'
 heroImage: '/images/blog/dev/two-pointer-approach.webp'
+featured: false
 ---
 
 When dealing with sorted arrays, a common task is to limit how many times each element appears. This can be done efficiently using a two-pointer approach. Let's break down how this works and how you can adjust it to allow up to `k` occurrences of each element.

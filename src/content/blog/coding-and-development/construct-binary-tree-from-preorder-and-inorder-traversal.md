@@ -3,6 +3,7 @@ title: 'Construct Binary Tree from Preorder and Inorder Traversal'
 description: 'Understanding how to build a binary tree using preorder and inorder traversal data'
 pubDate: 'Dec 14 2024'
 heroImage: '/images/blog/dev/binary-tree-traversal.webp'
+featured: true
 ---
 
 When working with binary trees, one of the interesting problems is constructing a tree from its traversals. Let's dive into how we can solve the problem "Construct Binary Tree from Preorder and Inorder Traversal."

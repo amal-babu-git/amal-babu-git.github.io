@@ -5,10 +5,21 @@ import Footer from "../components/Footer.astro";
 import { SITE_DESCRIPTION } from "../consts";
 import { getCollection } from "astro:content";
 
-// Get recent blog posts
-const posts = (await getCollection("blog"))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+// Get all blog posts sorted by date
+const allPosts = (await getCollection("blog")).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+// Filter featured posts and limit to 3
+const featuredPosts = allPosts
+	.filter((post) => post.data.featured === true)
 	.slice(0, 3);
+
+// Get recent posts (excluding featured ones to avoid duplication)
+const recentPosts = allPosts.filter((post) => !post.data.featured).slice(0, 3);
+
+// Display featured posts if available, otherwise fall back to recent posts
+const postsToDisplay = featuredPosts.length > 0 ? featuredPosts : recentPosts;
 
 // Get recent guides if they exist
 const guides = await getCollection("guides")
@@ -97,63 +108,19 @@ const PERSONAL_TITLE = "Amal Babu · ABK Datalab";
 					</div>
 				</section>
 
-				<!-- Featured Content Section -->
-				<section class="mb-12">
-					<h2 class="text-2xl font-semibold mb-6 border-b border-base-300 pb-2">
-						Featured Resources
-					</h2>
-					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-						<div
-							class="card bg-base-100 shadow-md hover:shadow-lg transition-all duration-300"
-						>
-							<div class="card-body">
-								<h3 class="card-title">FastAPI Admin CLI</h3>
-								<p class="my-2">
-									Learn how to structure your FastAPI applications with a
-									Django-inspired approach for better maintainability and
-									scalability.
-								</p>
-								<div class="card-actions justify-end">
-									<a
-										href="/blog/development/first-post"
-										class="btn btn-sm btn-outline"
-										>Read Article</a
-									>
-								</div>
-							</div>
-						</div>
-						<div
-							class="card bg-base-100 shadow-md hover:shadow-lg transition-all duration-300"
-						>
-							<div class="card-body">
-								<h3 class="card-title">Web Development Series</h3>
-								<p class="my-2">
-									Explore practical techniques for modern web development, from
-									optimized backend architecture to responsive frontend design.
-								</p>
-								<div class="card-actions justify-end">
-									<a
-										href="/blog/category/development"
-										class="btn btn-sm btn-outline"
-										>Browse Series</a
-									>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
-
-				<!-- Recent Blog Posts Section -->
+				<!-- Featured Posts Section -->
 				{
-					posts.length > 0 && (
+					postsToDisplay.length > 0 && (
 						<section class="mb-12">
 							<div class="flex justify-between items-center mb-6">
 								<h2 class="text-2xl font-semibold border-b border-base-300 pb-2 w-full">
-									Latest Articles
+									{featuredPosts.length > 0
+										? "Featured Articles"
+										: "Latest Articles"}
 								</h2>
 							</div>
 							<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-								{posts.map((post) => (
+								{postsToDisplay.map((post) => (
 									<div class="card bg-base-100 shadow-md hover:shadow-lg transition-all duration-300">
 										<figure class="h-40">
 											<img

@@ -1,122 +1,154 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import PostCard from '../../components/ui/PostCard.astro';
-import { SITE_DESCRIPTION } from '../../consts';
-import { getCollection } from 'astro:content';
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import PostCard from "../../components/ui/PostCard.astro";
+import { SITE_DESCRIPTION } from "../../consts";
+import { getCollection } from "astro:content";
+import EmailSubscribe from "../../components/EmailSubscribe";
 
 const BLOG_TITLE = "Blog | Amal Babu · ABK Datalab";
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+// Get all blog posts sorted by date
+const allPosts = (await getCollection("blog")).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
+// Get featured posts
+const featuredPosts = allPosts.filter((post) => post.data.featured === true);
+
 // Extract subcategories from file paths
-const subcategories = [...new Set(
-	posts.map(post => {
-		// Extract directory name from id (e.g., "ai-ml/post1" -> "ai-ml")
-		const pathParts = post.id.split('/');
-		return pathParts.length > 1 ? pathParts[0] : null;
-	}).filter(Boolean) // Remove null values
-)] as string[];
+const subcategories = [
+	...new Set(
+		allPosts
+			.map((post) => {
+				// Extract directory name from id (e.g., "ai-ml/post1" -> "ai-ml")
+				const pathParts = post.id.split("/");
+				return pathParts.length > 1 ? pathParts[0] : null;
+			})
+			.filter(Boolean) // Remove null values
+	),
+] as string[];
 
 // Format subcategory for display
 const formatSubcategory = (subcategory: string) => {
 	return subcategory
-		.split('-')
-		.map(word => word.charAt(0).toUpperCase() + word.slice(1))
-		.join(' ');
+		.split("-")
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(" ");
 };
 
 // Get posts by subcategory
 const getPostsBySubcategory = (subcategory: string) => {
-	return posts.filter(post => post.id.startsWith(subcategory + '/'));
+	return allPosts.filter((post) => post.id.startsWith(subcategory + "/"));
 };
 
-// Get featured posts (first 3)
-const featuredPosts = posts.slice(0, 3);
-const defaultImg = '/thumbnail.png'; // Default thumbnail path
+const defaultImg = "/thumbnail.png"; // Default thumbnail path
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={BLOG_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead
+			title={BLOG_TITLE}
+			description={SITE_DESCRIPTION}
+		/>
 	</head>
 	<body>
 		<Header />
 		<main class="container mx-auto px-4 py-12 max-w-5xl">
 			<!-- Blog Header -->
 			<div class="text-center mb-12">
-				<!-- <h1 class="text-4xl font-bold mb-3">
-					<span class="text-primary">Amal Babu · ABK Datalab</span>
-				</h1> -->
 				<h2 class="text-3xl font-semibold mb-2">Technical Insights & Guides</h2>
 				<p class="text-lg text-base-content/70 max-w-2xl mx-auto">
-					Practical solutions, implementation guides, and technical deep dives for modern developers
+					Practical solutions, implementation guides, and technical deep dives
+					for modern developers
 				</p>
 			</div>
-		
-			 <!-- Categories navigation -->
+
+			<!-- Categories navigation -->
 			<section class="mb-10">
 				<div class="card bg-base-100 shadow-sm">
 					<div class="card-body p-6">
-						<h2 class="card-title text-2xl font-semibold mb-4">Explore By Topic</h2>
+						<h2 class="card-title text-2xl font-semibold mb-4">
+							Explore By Topic
+						</h2>
 						<div class="divider my-2"></div>
 						<div class="breadcrumbs text-sm">
 							<ul>
-								<li><a href="/blog" class="font-semibold">All Topics</a></li>
-								{subcategories.map(subcategory => (
-									<li><a href={`/blog/category/${subcategory}`}>{formatSubcategory(subcategory)}</a></li>
-								))}
+								<li>
+									<a
+										href="/blog"
+										class="font-semibold"
+										>All Topics</a>
+								</li>
+								{
+									subcategories.map((subcategory) => (
+										<li>
+											<a href={`/blog/category/${subcategory}`}>
+												{formatSubcategory(subcategory)}
+											</a>
+										</li>
+									))
+								}
 							</ul>
 						</div>
 					</div>
 				</div>
 			</section>
-			
-			<!-- Featured posts section -->
-			<section class="mb-20">
-				<h2 class="text-3xl font-semibold mb-8 border-b border-base-300 pb-2">Featured Articles</h2>
-				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					{featuredPosts.map(post => (
-						<PostCard post={post} defaultImage={defaultImg} />
-					))}
-				</div>
-			</section>
-			
-			<!-- Subcategory sections -->
-			{subcategories.map(subcategory => (
-				<section class="mb-20">
-					<div class="flex justify-between items-center mb-8 border-b border-base-300 pb-2">
-						<h2 class="text-3xl font-semibold">{formatSubcategory(subcategory)}</h2>
-						{getPostsBySubcategory(subcategory).length > 3 && (
-							<a href={`/blog/category/${subcategory}`} class="text-sm font-medium hover:underline">
-								View all articles →
-							</a>
-						)}
-					</div>
-					
-					<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-						{getPostsBySubcategory(subcategory).slice(0, 3).map(post => (
-							<PostCard post={post} defaultImage={defaultImg} />
-						))}
-					</div>
-				</section>
-			))}
 
-			<!-- Newsletter section -->
-			<section class="card bg-base-200 mb-16">
-				<div class="card-body p-8 text-center">
-					<h2 class="text-2xl font-semibold mb-4">Get Practical Insights</h2>
-					<p class="max-w-md mx-auto mb-6 text-base-content/80">Subscribe to receive new articles and coding tips from Amal Babu · ABK Datalab directly in your inbox.</p>
-					<div class="flex flex-col sm:flex-row items-center justify-center gap-2 max-w-md mx-auto">
-						<input type="email" placeholder="Your email address" class="input input-bordered w-full" />
-						<button class="btn btn-primary w-full sm:w-auto">Subscribe</button>
-					</div>
-				</div>
-			</section>
+			<!-- Featured posts section (only if there are featured posts) -->
+			{
+				featuredPosts.length > 0 && (
+					<section class="mb-20">
+						<h2 class="text-3xl font-semibold mb-8 border-b border-base-300 pb-2">
+							Featured Articles
+						</h2>
+						<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+							{featuredPosts.map((post) => (
+								<PostCard
+									post={post}
+									defaultImage={defaultImg}
+								/>
+							))}
+						</div>
+					</section>
+				)
+			}
+
+			<!-- Subcategory sections -->
+			{
+				subcategories.map((subcategory) => (
+					<section class="mb-20">
+						<div class="flex justify-between items-center mb-8 border-b border-base-300 pb-2">
+							<h2 class="text-3xl font-semibold">
+								{formatSubcategory(subcategory)}
+							</h2>
+							{getPostsBySubcategory(subcategory).length > 3 && (
+								<a
+									href={`/blog/category/${subcategory}`}
+									class="text-sm font-medium hover:underline"
+								>
+									View all articles →
+								</a>
+							)}
+						</div>
+
+						<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+							{getPostsBySubcategory(subcategory)
+								.slice(0, 3)
+								.map((post) => (
+									<PostCard
+										post={post}
+										defaultImage={defaultImg}
+									/>
+								))}
+						</div>
+					</section>
+				))
+			}
+
+			<EmailSubscribe />
 		</main>
 		<Footer />
 	</body>

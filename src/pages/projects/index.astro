@@ -39,23 +39,17 @@ const projects = [
       "Database Migrations: Easy database migration commands using Alembic",
       "Developer Tools: Shell access to Docker containers and more"
     ],
-    commands: [
-      { command: "fastapi-admin startproject", description: "Create a new FastAPI project" },
-      { command: "fastapi-admin startapp", description: "Create a new app within a project" },
-      { command: "fastapi-admin docker build", description: "Build Docker containers" },
-      { command: "fastapi-admin db migrate", description: "Apply database migrations" },
-      { command: "fastapi-admin createsuperuser", description: "Create an admin user" }
-    ],
+   
     image: "/images/projects/fastapi-admin-cli.png" // Add an appropriate image path
   }
   // Add more projects here in the future
 ];
 ---
 
-<BaseLayout title="Projects & Open Source" description= "">
+<BaseLayout title="Open Source Projects" description= "">
   <div class="flex flex-col gap-8">
     <header>
-      <h1 class="text-3xl font-bold mb-2">Projects & Open Source</h1>
+      <h1 class="text-3xl font-bold mb-2">Open Source Projects</h1>
       <p class="text-base-content/80">
         Explore my open source projects and contributions. These projects are developed with a focus on
         solving real-world problems and providing valuable tools for the developer community.
@@ -117,40 +111,7 @@ const projects = [
             </div>
             
             <!-- Project Details Section -->
-            <div class="card bg-base-200">
-              <div class="card-body">
-                <h3 class="font-semibold text-lg mb-2">Common Commands</h3>
-                <div class="overflow-x-auto">
-                  <table class="table table-sm">
-                    <thead>
-                      <tr>
-                        <th>Command</th>
-                        <th>Description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {project.commands.map(cmd => (
-                        <tr>
-                          <td>
-                            <code class="bg-base-300 p-1 rounded">{cmd.command}</code>
-                          </td>
-                          <td>{cmd.description}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                
-                <div class="card-actions justify-end mt-4">
-                  <a 
-                    href="/blog/development/first-post" 
-                    class="btn btn-outline btn-sm"
-                  >
-                    Read Detailed Blog
-                  </a>
-                </div>
-              </div>
-            </div>
+            
           </div>
           
           {index < projects.length - 1 && <div class="divider mt-8"></div>}
