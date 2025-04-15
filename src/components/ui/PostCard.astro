@@ -1,0 +1,33 @@
+---
+import FormattedDate from '../../components/FormattedDate.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  defaultImage?: string;
+}
+
+const { post, defaultImage = '/thumbnail.png' } = Astro.props;
+---
+
+<article class="card bg-base-100 border border-base-200 hover:shadow-md transition-shadow duration-300 h-full">
+  <figure class="h-48 overflow-hidden">
+    <img 
+      src={post.data.heroImage || defaultImage} 
+      alt={post.data.title || "Blog post thumbnail"} 
+      class="w-full h-full object-cover" 
+    />
+  </figure>
+  <div class="card-body p-6">
+    <div class="text-xs font-medium text-base-content/70 mb-2">
+      <FormattedDate date={post.data.pubDate} />
+    </div>
+    <h3 class="text-xl font-semibold mb-2 line-clamp-2">{post.data.title}</h3>
+    <p class="text-sm mb-4 line-clamp-3 text-base-content/80">{post.data.description}</p>
+    <div class="card-actions mt-auto">
+      <a href={`/blog/${post.id}/`} class="btn btn-sm btn-ghost normal-case">
+        Read More →
+      </a>
+    </div>
+  </div>
+</article>

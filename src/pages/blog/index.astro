@@ -2,9 +2,11 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import PostCard from '../../components/ui/PostCard.astro';
+import { SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
+
+const BLOG_TITLE = "Blog | Amal Babu · ABK Datalab";
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -34,43 +36,52 @@ const getPostsBySubcategory = (subcategory: string) => {
 
 // Get featured posts (first 3)
 const featuredPosts = posts.slice(0, 3);
-const default_img = '../../../public/thumbnail.png'; // Replace with your default thumbnail URL
+const defaultImg = '/thumbnail.png'; // Default thumbnail path
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={BLOG_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
 		<Header />
 		<main class="container mx-auto px-4 py-12 max-w-5xl">
+			<!-- Blog Header -->
+			<div class="text-center mb-12">
+				<!-- <h1 class="text-4xl font-bold mb-3">
+					<span class="text-primary">Amal Babu · ABK Datalab</span>
+				</h1> -->
+				<h2 class="text-3xl font-semibold mb-2">Technical Insights & Guides</h2>
+				<p class="text-lg text-base-content/70 max-w-2xl mx-auto">
+					Practical solutions, implementation guides, and technical deep dives for modern developers
+				</p>
+			</div>
+		
+			 <!-- Categories navigation -->
+			<section class="mb-10">
+				<div class="card bg-base-100 shadow-sm">
+					<div class="card-body p-6">
+						<h2 class="card-title text-2xl font-semibold mb-4">Explore By Topic</h2>
+						<div class="divider my-2"></div>
+						<div class="breadcrumbs text-sm">
+							<ul>
+								<li><a href="/blog" class="font-semibold">All Topics</a></li>
+								{subcategories.map(subcategory => (
+									<li><a href={`/blog/category/${subcategory}`}>{formatSubcategory(subcategory)}</a></li>
+								))}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+			
 			<!-- Featured posts section -->
 			<section class="mb-20">
 				<h2 class="text-3xl font-semibold mb-8 border-b border-base-300 pb-2">Featured Articles</h2>
 				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 					{featuredPosts.map(post => (
-						<article class="card bg-base-100 border border-base-200 hover:shadow-md transition-shadow duration-300 h-full">
-							<figure class="h-52 overflow-hidden">
-								<img 
-									src={post.data.heroImage || default_img} 
-									alt={post.data.title || "Blog post thumbnail"} 
-									class="w-full h-full object-cover" 
-								/>
-							</figure>
-							<div class="card-body p-6">
-								<div class="text-xs font-medium text-base-content/70 mb-2">
-									<FormattedDate date={post.data.pubDate} />
-								</div>
-								<h3 class="text-xl font-semibold mb-2 line-clamp-2">{post.data.title}</h3>
-								<p class="text-sm mb-4 line-clamp-3 text-base-content/80">{post.data.description}</p>
-								<div class="card-actions mt-auto">
-									<a href={`/blog/${post.id}/`} class="btn btn-sm btn-ghost normal-case">
-										Read More →
-									</a>
-								</div>
-							</div>
-						</article>
+						<PostCard post={post} defaultImage={defaultImg} />
 					))}
 				</div>
 			</section>
@@ -89,27 +100,7 @@ const default_img = '../../../public/thumbnail.png'; // Replace with your defaul
 					
 					<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 						{getPostsBySubcategory(subcategory).slice(0, 3).map(post => (
-							<article class="card bg-base-100 border border-base-200 hover:shadow-md transition-shadow duration-300 h-full">
-								<figure class="h-48 overflow-hidden">
-									<img 
-										src={post.data.heroImage}
-										alt={post.data.title}
-										class="w-full h-full object-cover"
-									/>
-								</figure>
-								<div class="card-body p-6">
-									<div class="text-xs font-medium text-base-content/70 mb-2">
-										<FormattedDate date={post.data.pubDate} />
-									</div>
-									<h3 class="text-xl font-semibold mb-2 line-clamp-2">{post.data.title}</h3>
-									<p class="text-sm mb-4 line-clamp-3 text-base-content/80">{post.data.description}</p>
-									<div class="card-actions mt-auto">
-										<a href={`/blog/${post.id}/`} class="btn btn-sm btn-ghost normal-case">
-											Read More →
-										</a>
-									</div>
-								</div>
-							</article>
+							<PostCard post={post} defaultImage={defaultImg} />
 						))}
 					</div>
 				</section>
@@ -118,8 +109,8 @@ const default_img = '../../../public/thumbnail.png'; // Replace with your defaul
 			<!-- Newsletter section -->
 			<section class="card bg-base-200 mb-16">
 				<div class="card-body p-8 text-center">
-					<h2 class="text-2xl font-semibold mb-4">Stay Updated</h2>
-					<p class="max-w-md mx-auto mb-6 text-base-content/80">Subscribe to our newsletter to receive the latest articles directly in your inbox.</p>
+					<h2 class="text-2xl font-semibold mb-4">Get Practical Insights</h2>
+					<p class="max-w-md mx-auto mb-6 text-base-content/80">Subscribe to receive new articles and coding tips from Amal Babu · ABK Datalab directly in your inbox.</p>
 					<div class="flex flex-col sm:flex-row items-center justify-center gap-2 max-w-md mx-auto">
 						<input type="email" placeholder="Your email address" class="input input-bordered w-full" />
 						<button class="btn btn-primary w-full sm:w-auto">Subscribe</button>

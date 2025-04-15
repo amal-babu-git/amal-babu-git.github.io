@@ -1,71 +1,355 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_DESCRIPTION } from "../consts";
+import { getCollection } from "astro:content";
+
+// Get recent blog posts
+const posts = (await getCollection("blog"))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
+
+// Get recent guides if they exist
+const guides = await getCollection("guides")
+	.then((guides) =>
+		guides
+			.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+			.slice(0, 3)
+	)
+	.catch(() => []);
+
+const PERSONAL_TITLE = "Amal Babu · ABK Datalab";
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead
+			title={PERSONAL_TITLE}
+			description={SITE_DESCRIPTION}
+		/>
 	</head>
 	<body>
 		<Header />
 		<div class="container mx-auto px-4">
-			<div class="hero bg-base-200 rounded-box my-8 py-10">
-				<div class="hero-content text-center">
-					<div class="max-w-md">
-						<h1 class="text-5xl font-bold text-primary">🧑‍🚀 Hello, Astronaut!</h1>
-						<p class="py-6">
-							Welcome to the official <a href="https://astro.build/" class="link link-primary">Astro</a> blog starter template. This
-							template serves as a lightweight, minimally-styled starting point for anyone looking to build
-							a personal website, blog, or portfolio with Astro.
+			<!-- Hero Section -->
+			<div
+				class="hero bg-base-100 rounded-box my-8 py-12 border-b border-base-300"
+			>
+				<div class="hero-content text-center md:text-left">
+					<div class="max-w-3xl">
+						<h1 class="text-4xl font-bold mb-4">
+							<span class="text-primary">Amal Babu · ABK Datalab</span>
+						</h1>
+						<p class="text-lg text-base-content/80 mb-8 leading-relaxed">
+							Find thoughts, guides, and experiments around software
+							development, APIs, and AI tools. I share what I'm learning — maybe
+							it’ll help you, maybe it’ll just be interesting.
 						</p>
-						<button class="btn btn-primary">Get Started</button>
+						<div class="flex flex-wrap justify-center md:justify-start gap-4">
+							<a
+								href="/blog"
+								class="btn btn-primary"
+								>Explore Articles</a
+							>
+							<!-- <a href="/guides" class="btn btn-outline">View Guides</a> -->
+						</div>
 					</div>
 				</div>
 			</div>
 
-			<main class="prose lg:prose-xl mx-auto mb-10">
-				<div class="card bg-base-100 shadow-xl mb-8">
-					<div class="card-body">
-						<h2 class="card-title">About this template</h2>
-						<p>
-							This template comes with a few integrations already configured in your
-							<code class="bg-base-200 px-2 py-1 rounded">astro.config.mjs</code> file. You can customize your setup with
-							<a href="https://astro.build/integrations" class="link link-primary">Astro Integrations</a> to add tools like Tailwind,
-							React, or Vue to your project.
-						</p>
-						<div class="alert alert-info shadow-lg mt-4">
-							<div>
-								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-								<span>Have fun! If you get stuck, remember to <a href="https://docs.astro.build/" class="link">read the docs</a> or <a href="https://astro.build/chat" class="link">join us on Discord</a> to ask questions.</span>
+			<main class="max-w-5xl mx-auto mb-16">
+				<!-- What You'll Find Section -->
+				<section class="mb-12">
+					<div class="card bg-base-100 shadow-sm">
+						<div class="card-body">
+							<h2
+								class="text-2xl font-semibold mb-4 border-b border-base-200 pb-2"
+							>
+								What You'll Find Here
+							</h2>
+							<p class="mb-4">
+								Thoughts, tutorials, and experiments on building modern
+								applications. I share what I'm learning — sometimes it's
+								helpful, sometimes just interesting.
+							</p>
+							<p>
+								Topics range from API design and frontend practices to AI
+								integrations and image generation workflows. You’ll also find
+								guides on using ComfyUI, training custom LoRA models, and
+								exploring practical machine learning.
+							</p>
+							<div class="flex flex-wrap gap-2 mt-4">
+								<span class="badge badge-neutral">Python</span>
+								<span class="badge badge-neutral">FastAPI</span>
+								<span class="badge badge-neutral">Django</span>
+								<span class="badge badge-neutral">JavaScript</span>
+								<span class="badge badge-neutral">React</span>
+								<span class="badge badge-neutral">Next.js</span>
+								<span class="badge badge-neutral">Machine Learning</span>
+								<span class="badge badge-neutral">Docker</span>
+								<span class="badge badge-neutral">ComfyUI</span>
+								<span class="badge badge-neutral">LoRA Models</span>
+								<span class="badge badge-neutral">Image Generation</span>
 							</div>
 						</div>
 					</div>
-				</div>
+				</section>
 
-				<div class="card bg-base-100 shadow-xl">
-					<div class="card-body">
-						<h2 class="card-title">Getting Started</h2>
-						<p>Here are a few ideas on how to get started with the template:</p>
-						<ul class="menu bg-base-200 w-full p-2 rounded-box">
-							<li><a>Edit this page in <code>src/pages/index.astro</code></a></li>
-							<li><a>Edit the site header items in <code>src/components/Header.astro</code></a></li>
-							<li><a>Add your name to the footer in <code>src/components/Footer.astro</code></a></li>
-							<li><a>Check out the included blog posts in <code>src/content/blog/</code></a></li>
-							<li><a>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></a></li>
-						</ul>
-
-						<div class="divider">Other templates</div>
-						<p>
-							Looking for a blog template with a bit more personality? Check out
-							<a href="https://github.com/Charca/astro-blog-template" class="link link-primary">astro-blog-template</a>
-							by <a href="https://twitter.com/Charca" class="link">Maxi Ferreira</a>.
-						</p>
+				<!-- Featured Content Section -->
+				<section class="mb-12">
+					<h2 class="text-2xl font-semibold mb-6 border-b border-base-300 pb-2">
+						Featured Resources
+					</h2>
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+						<div
+							class="card bg-base-100 shadow-md hover:shadow-lg transition-all duration-300"
+						>
+							<div class="card-body">
+								<h3 class="card-title">FastAPI Admin CLI</h3>
+								<p class="my-2">
+									Learn how to structure your FastAPI applications with a
+									Django-inspired approach for better maintainability and
+									scalability.
+								</p>
+								<div class="card-actions justify-end">
+									<a
+										href="/blog/development/first-post"
+										class="btn btn-sm btn-outline"
+										>Read Article</a
+									>
+								</div>
+							</div>
+						</div>
+						<div
+							class="card bg-base-100 shadow-md hover:shadow-lg transition-all duration-300"
+						>
+							<div class="card-body">
+								<h3 class="card-title">Web Development Series</h3>
+								<p class="my-2">
+									Explore practical techniques for modern web development, from
+									optimized backend architecture to responsive frontend design.
+								</p>
+								<div class="card-actions justify-end">
+									<a
+										href="/blog/category/development"
+										class="btn btn-sm btn-outline"
+										>Browse Series</a
+									>
+								</div>
+							</div>
+						</div>
 					</div>
-				</div>
+				</section>
+
+				<!-- Recent Blog Posts Section -->
+				{
+					posts.length > 0 && (
+						<section class="mb-12">
+							<div class="flex justify-between items-center mb-6">
+								<h2 class="text-2xl font-semibold border-b border-base-300 pb-2 w-full">
+									Latest Articles
+								</h2>
+							</div>
+							<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+								{posts.map((post) => (
+									<div class="card bg-base-100 shadow-md hover:shadow-lg transition-all duration-300">
+										<figure class="h-40">
+											<img
+												src={
+													post.data.heroImage || "/images/blog/thumbnail.png"
+												}
+												alt=""
+												class="w-full h-full object-cover"
+											/>
+										</figure>
+										<div class="card-body p-5">
+											<h3 class="card-title text-lg">{post.data.title}</h3>
+											<p class="text-sm text-base-content/70">
+												{new Date(post.data.pubDate).toLocaleDateString(
+													"en-US",
+													{
+														year: "numeric",
+														month: "short",
+														day: "numeric",
+													}
+												)}
+											</p>
+											<p class="text-sm line-clamp-2 my-2">
+												{post.data.description}
+											</p>
+											<div class="card-actions justify-end mt-2">
+												<a
+													href={`/blog/${post.id}/`}
+													class="btn btn-sm btn-outline"
+												>
+													Read More
+												</a>
+											</div>
+										</div>
+									</div>
+								))}
+							</div>
+							<div class="flex justify-end mt-4">
+								<a
+									href="/blog"
+									class="btn btn-ghost btn-sm"
+								>
+									View All Articles →
+								</a>
+							</div>
+						</section>
+					)
+				}
+
+				<!-- Key Topics Section -->
+				<section class="mb-12">
+					<h2 class="text-2xl font-semibold mb-6 border-b border-base-300 pb-2">
+						Key Topics
+					</h2>
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+						<div class="card bg-base-100 shadow-sm">
+							<div class="card-body">
+								<h3 class="card-title">Backend Development</h3>
+								<p>
+									Optimize your API services with Python using FastAPI and
+									Django, with practical examples focused on performance,
+									security, and maintainability.
+								</p>
+							</div>
+						</div>
+						<div class="card bg-base-100 shadow-sm">
+							<div class="card-body">
+								<h3 class="card-title">Frontend Development</h3>
+								<p>
+									Implement responsive and interactive user interfaces with
+									step-by-step tutorials for React, Next.js, and modern CSS
+									frameworks.
+								</p>
+							</div>
+						</div>
+						<div class="card bg-base-100 shadow-sm">
+							<div class="card-body">
+								<h3 class="card-title">AI & Machine Learning</h3>
+								<p>
+									Apply machine learning models to real-world problems with
+									practical implementations using Python, TensorFlow, and
+									related technologies.
+								</p>
+							</div>
+						</div>
+						<div class="card bg-base-100 shadow-sm">
+							<div class="card-body">
+								<h3 class="card-title">DevOps & Cloud</h3>
+								<p>
+									Set up efficient deployment workflows using Docker, CI/CD
+									pipelines, and cloud services for scalable infrastructure.
+								</p>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- Resources Section
+				{guides.length > 0 && (
+					<section class="mb-12">
+						<h2 class="text-2xl font-semibold mb-6 border-b border-base-300 pb-2">Technical Guides</h2>
+						<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+							{guides.map((guide) => (
+								<div class="card bg-base-100 shadow-md hover:shadow-lg transition-all duration-300">
+									<div class="card-body p-5">
+										<h3 class="card-title text-lg">{guide.data.title}</h3>
+										<p class="text-sm line-clamp-2 my-2">{guide.data.description}</p>
+										<div class="card-actions justify-end mt-2">
+											<a href={`/guides/${guide.id}/`} class="btn btn-sm btn-outline">View Guide</a>
+										</div>
+									</div>
+								</div>
+							))}
+						</div>
+						<div class="flex justify-end mt-4">
+							<a href="/guides" class="btn btn-ghost btn-sm">Browse All Guides →</a>
+						</div>
+					</section>
+				)} -->
+
+				<!-- Subscribe Section -->
+				<section class="card bg-base-200">
+					<div class="card-body p-8">
+						<h2 class="text-2xl font-semibold mb-4 text-center">
+							Stay Updated
+						</h2>
+						<p class="max-w-md mx-auto mb-6 text-center text-base-content/80">
+							Subscribe to receive the latest articles, guides, and resources
+							directly in your inbox.
+						</p>
+						<div
+							class="flex flex-col sm:flex-row items-center justify-center gap-2 max-w-md mx-auto"
+						>
+							<input
+								type="email"
+								placeholder="Your email address"
+								class="input input-bordered w-full"
+							/>
+							<button class="btn btn-primary w-full sm:w-auto">Subscribe</button
+							>
+						</div>
+					</div>
+				</section>
+
+				<!-- Connect Section -->
+				<section class="mt-12 card bg-base-100 shadow-sm">
+					<div class="card-body p-6">
+						<div class="flex justify-center items-center flex-col text-center">
+							<h2 class="text-xl font-semibold mb-3">
+								Connect with Amal Babu · ABK Datalab
+							</h2>
+							<p class="mb-4 max-w-md">
+								Have questions or suggestions? Want to discuss potential
+								collaborations? Reach out directly.
+							</p>
+							<div class="flex gap-3">
+								<a
+									href="https://github.com/amal-babu-git"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="btn btn-sm btn-outline"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										class="fill-current mr-1"
+										><path
+											d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+										></path></svg
+									>
+									GitHub
+								</a>
+								<a
+									href="mailto:developer.amalbabu@gmail.com"
+									class="btn btn-sm btn-outline"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										fill="currentColor"
+										viewBox="0 0 16 16"
+										class="mr-1"
+									>
+										<path
+											d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"
+										></path>
+									</svg>
+									Contact
+								</a>
+							</div>
+						</div>
+					</div>
+				</section>
 			</main>
 		</div>
 		<Footer />

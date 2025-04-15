@@ -12,9 +12,9 @@ const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
 <a 
   href={href} 
   class:list={[
-    'link transition-colors duration-200 hover:text-accent', 
+    'transition-colors duration-200 hover:text-accent no-underline', 
     className, 
-    { 'link-primary font-bold': isActive }
+    { 'text-primary font-bold': isActive }
   ]} 
   {...props}
 >
