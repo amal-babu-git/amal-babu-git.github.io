@@ -38,5 +38,21 @@ const { title, description, image } = Astro.props;
 		</main>
 
 		<Footer />
-	</body>
+	</body><!-- Structured data for better SEO -->
+	<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "ProfilePage",
+			"mainEntity": {
+				"@type": "Person",
+				"name": "Amal Babu",
+				"url": "https://amal-babu-git.github.io",
+				"jobTitle": "Full-Stack Developer & AI Specialist",
+				"sameAs": [
+					"https://github.com/amal-babu-git",
+					"https://www.linkedin.com/in/amalbabudev"
+				]
+			}
+		}
+	</script>
 </html>
