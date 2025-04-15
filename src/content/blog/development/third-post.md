@@ -2,7 +2,7 @@
 title: 'Third post'
 description: 'Lorem ipsum dolor sit amet'
 pubDate: 'Jul 22 2022'
-heroImage: '/blog-placeholder-2.jpg'
+heroImage: '/images/blog/dev/blog-placeholder-2.jpg'
 ---
 Hi, I am Amal Babu.
 

@@ -2,10 +2,10 @@
 title: 'FastAPI Admin CLI blog'
 description: 'Fastapi admin cli'
 pubDate: 'Jun 30 2025'
-heroImage: '/blog-placeholder-3.jpg'
----
+heroImage: '/images/blog/dev/blog-placeholder-2.jpg'
+# heroImage: 'images/blog/thumbnail.png'
 
-# FastAPI Admin CLI
+---
 
 A Django-inspired CLI tool for managing FastAPI applications with a modular structure. This tool helps developers quickly scaffold and manage FastAPI projects with a clean, organized architecture.
 

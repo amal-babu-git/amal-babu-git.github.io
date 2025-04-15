@@ -1,0 +1,41 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import BlogPost from '../../layouts/BlogPost.astro';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+    const guides = await getCollection('guides');
+    return guides.map((guide) => ({
+        params: { slug: guide.id },
+        props: guide,
+    }));
+}
+type Props = CollectionEntry<'guides'>;
+
+const guide = Astro.props;
+const { Content } = await render(guide);
+---
+
+<BlogPost {...guide.data}>
+    <div class="not-prose mb-6">
+        {guide.data.difficulty && (
+            <div class={`badge ${
+                guide.data.difficulty === 'beginner' ? 'badge-success' :
+                guide.data.difficulty === 'intermediate' ? 'badge-warning' :
+                'badge-error'
+            }`}>
+                {guide.data.difficulty}
+            </div>
+        )}
+        
+        {guide.data.topics && guide.data.topics.length > 0 && (
+            <div class="flex flex-wrap gap-2 mt-2">
+                {guide.data.topics.map(topic => (
+                    <span class="badge badge-outline">{topic}</span>
+                ))}
+            </div>
+        )}
+    </div>
+    
+    <Content />
+</BlogPost>

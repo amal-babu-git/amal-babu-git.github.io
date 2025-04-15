@@ -1,0 +1,124 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+const guides = (await getCollection('guides')).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+// Get featured guides (first 3)
+const featuredGuides = guides.slice(0, 3);
+// Get remaining guides
+const remainingGuides = guides.slice(3);
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={`Guides | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+    </head>
+    <body>
+        <Header />
+        <main class="container mx-auto px-4 py-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
+                <h1 class="text-4xl font-bold">Guides & Tutorials</h1>
+                
+                <div class="join">
+                    <button class="join-item btn btn-sm">All</button>
+                    <button class="join-item btn btn-sm btn-ghost">Beginner</button>
+                    <button class="join-item btn btn-sm btn-ghost">Advanced</button>
+                </div>
+            </div>
+
+            {featuredGuides.length > 0 && (
+                <div class="mb-12">
+                    <h2 class="text-lg font-medium mb-4 text-base-content/70">Featured Guides</h2>
+                    <div class="carousel w-full rounded-box">
+                        {featuredGuides.map((guide, index) => (
+                            <div id={`slide-${index}`} class="carousel-item relative w-full md:w-4/5 lg:w-2/3">
+                                <div class="hero min-h-[60vh] bg-base-200 relative overflow-hidden rounded-xl">
+                                    <img 
+                                        src={guide.data.heroImage} 
+                                        alt="" 
+                                        class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-60"
+                                    />
+                                    <div class="hero-overlay bg-gradient-to-t from-base-300 to-transparent"></div>
+                                    <div class="hero-content text-left p-6 md:p-10 relative z-10 w-full">
+                                        <div class="max-w-md md:max-w-2xl">
+                                            <div class="badge badge-secondary mb-4">Guide</div>
+                                            {guide.data.difficulty && (
+                                                <div class={`badge ml-2 mb-4 ${
+                                                    guide.data.difficulty === 'beginner' ? 'badge-success' :
+                                                    guide.data.difficulty === 'intermediate' ? 'badge-warning' :
+                                                    'badge-error'
+                                                }`}>
+                                                    {guide.data.difficulty}
+                                                </div>
+                                            )}
+                                            <h2 class="text-3xl md:text-4xl font-bold mb-2">{guide.data.title}</h2>
+                                            <p class="text-base-content/70 mb-4">
+                                                <FormattedDate date={guide.data.pubDate} />
+                                            </p>
+                                            <p class="mb-6 line-clamp-2 md:line-clamp-3">{guide.data.description}</p>
+                                            <a href={`/guides/${guide.id}/`} class="btn btn-secondary">Read Guide</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                                    <a href={`#slide-${index === 0 ? featuredGuides.length - 1 : index - 1}`} class="btn btn-circle btn-ghost">❮</a> 
+                                    <a href={`#slide-${index === featuredGuides.length - 1 ? 0 : index + 1}`} class="btn btn-circle btn-ghost">❯</a>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    
+                    <div class="flex justify-center w-full py-2 gap-2 mt-2">
+                        {featuredGuides.map((_, index) => (
+                            <a href={`#slide-${index}`} class="btn btn-xs btn-circle">{index + 1}</a>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            <div class="mb-12">
+                <h2 class="text-lg font-medium mb-4 text-base-content/70">All Guides</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {remainingGuides.map((guide) => (
+                        <div class="card bg-base-100 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full group/card">
+                            <figure class="relative overflow-hidden h-48">
+                                <img 
+                                    src={guide.data.heroImage} 
+                                    alt="" 
+                                    class="w-full h-full object-cover transform group-hover/card:scale-110 transition-transform duration-700" 
+                                />
+                                <div class="absolute inset-0 bg-gradient-to-t from-base-300/80 to-transparent"></div>
+                            </figure>
+                            <div class="card-body p-5">
+                                <h2 class="card-title group-hover/card:text-secondary transition-colors">{guide.data.title}</h2>
+                                <p class="text-sm text-base-content/70">
+                                    <FormattedDate date={guide.data.pubDate} />
+                                </p>
+                                {guide.data.topics && guide.data.topics.length > 0 && (
+                                    <div class="flex flex-wrap gap-1 my-2">
+                                        {guide.data.topics.map(topic => (
+                                            <span class="badge badge-outline">{topic}</span>
+                                        ))}
+                                    </div>
+                                )}
+                                <p class="text-sm line-clamp-2">{guide.data.description}</p>
+                                <div class="card-actions justify-end mt-4">
+                                    <a href={`/guides/${guide.id}/`} class="btn btn-sm btn-outline btn-secondary">Read Guide</a>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </main>
+        <Footer />
+    </body>
+</html>
