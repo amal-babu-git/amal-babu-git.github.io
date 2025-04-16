@@ -15,7 +15,6 @@
   max-width: none;
   font-size: 0.95rem;
   line-height: 1.6;
-  text-align: justify;
 }
 
 /* Headings with more compact spacing */
@@ -93,6 +92,7 @@
   margin-bottom: 0.75rem;
   color: var(--color-base-content);
   opacity: 0.85;
+  text-align: justify;
 }
 
 /* Code blocks */
