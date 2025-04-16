@@ -20,19 +20,4 @@ const blog = defineCollection({
 
 
 
-const guides = defineCollection({
-	loader: glob({ base: "./src/content/guides", pattern: "**/*.{md,mdx}" }),
-	schema: z.object({
-		title: z.string(),
-		description: z.string(),
-		// Transform string to Date object
-		pubDate: z.coerce.date(),
-		updatedDate: z.coerce.date().optional(),
-		heroImage: z.string().optional(),
-		// Optional additional fields specific to guides
-		difficulty: z.enum(["beginner", "intermediate", "advanced"]).optional(),
-		topics: z.array(z.string()).optional(),
-	}),
-});
-
-export const collections = { blog, guides };
+export const collections = { blog };

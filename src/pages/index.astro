@@ -22,15 +22,6 @@ const recentPosts = allPosts.filter((post) => !post.data.featured).slice(0, 3);
 // Display featured posts if available, otherwise fall back to recent posts
 const postsToDisplay = featuredPosts.length > 0 ? featuredPosts : recentPosts;
 
-// Get recent guides if they exist
-const guides = await getCollection("guides")
-	.then((guides) =>
-		guides
-			.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-			.slice(0, 3)
-	)
-	.catch(() => []);
-
 const PERSONAL_TITLE = "Amal Babu · ABK Datalab";
 ---
 
