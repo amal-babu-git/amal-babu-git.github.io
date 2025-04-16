@@ -103,7 +103,7 @@ Run the script: `python.exe install.py` from the `comfyui-reactor-node` folder.
 
 **ReActor Configuration Example:**
 
-![ReActor Configuration Options](/images/blog/comfyui/faceswap/comfyui-faceswap-react.png)
+[ReActor Configuration Options](/images/blog/comfyui/faceswap/comfyui-faceswap-react.png)
 
 #### Step 3: Run
 
