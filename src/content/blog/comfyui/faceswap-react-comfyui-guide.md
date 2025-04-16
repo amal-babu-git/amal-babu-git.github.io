@@ -1,6 +1,6 @@
 ---
 title: 'Simple Guide to Face Swap in ComfyUI Using ReActor Node'
-description: 'Learn how to install and use ReActor Node in ComfyUI for face swapping without complex Visual Studio setup'
+description: 'Learn how to install and use ReActor Node in ComfyUI for face swapping'
 pubDate: 'Apr 16 2025'
 heroImage: '/images/blog/comfyui/faceswap/comfyui-faceswap-react.png'
 featured: true
