@@ -93,7 +93,7 @@ Run the script: `python.exe install.py` from the `comfyui-reactor-node` folder.
 
 **Basic ReActor Workflow Example:**
 
-![Basic ReActor Face Swap Workflow](/images/blog/comfyui/faceswap/basic-workflow.png)
+![Basic ReActor Face Swap Workflow](/workflows/comfy-react-faceswap.json)
 
 #### Step 2: Configure
 
