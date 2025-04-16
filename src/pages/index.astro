@@ -4,6 +4,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_DESCRIPTION } from "../consts";
 import { getCollection } from "astro:content";
+import EmailSubscribe from "../components/EmailSubscribe";
 
 // Get all blog posts sorted by date
 const allPosts = (await getCollection("blog")).sort(
@@ -55,17 +56,17 @@ const PERSONAL_TITLE = "Amal Babu · ABK Datalab";
 				<div class="hero-content text-center md:text-left">
 					<div class="max-w-3xl">
 						<h1 class="text-4xl font-bold mb-4">
-							<span class="text-primary">Amal Babu · ABK Datalab</span>
+							<span class="text-base-content">Amal Babu · ABK Datalab</span>
 						</h1>
 						<p class="text-lg text-base-content/80 mb-8 leading-relaxed">
 							Find thoughts, guides, and experiments around software
 							development, APIs, and AI tools. I share what I'm learning — maybe
-							it’ll help you, maybe it’ll just be interesting.
+							it&apos;ll help you, maybe it&apos;ll just be interesting.
 						</p>
 						<div class="flex flex-wrap justify-center md:justify-start gap-4">
 							<a
 								href="/blog"
-								class="btn btn-primary"
+								class="btn btn-primary-content btn-outline"
 								>Explore Articles</a
 							>
 							<!-- <a href="/guides" class="btn btn-outline">View Guides</a> -->
@@ -84,17 +85,15 @@ const PERSONAL_TITLE = "Amal Babu · ABK Datalab";
 							>
 								What You'll Find Here
 							</h2>
-							<p class="mb-4">
-								Thoughts, tutorials, and experiments on building modern
-								applications. I share what I'm learning — sometimes it's
-								helpful, sometimes just interesting.
-							</p>
-							<p>
-								Topics range from API design and frontend practices to AI
-								integrations and image generation workflows. You’ll also find
-								guides on using ComfyUI, training custom LoRA models, and
-								exploring practical machine learning.
-							</p>
+							<div class="text-base text-base-content/80">
+								
+								<p>
+									Topics range from API design and frontend practices to AI
+									integrations and image generation workflows. You’ll also find
+									guides on using ComfyUI, training custom LoRA models, and
+									exploring practical machine learning.
+								</p>
+							</div>
 							<div class="flex flex-wrap gap-2 mt-4">
 								<span class="badge badge-neutral">Python</span>
 								<span class="badge badge-neutral">FastAPI</span>
@@ -246,28 +245,7 @@ const PERSONAL_TITLE = "Amal Babu · ABK Datalab";
 				)} -->
 
 				<!-- Subscribe Section -->
-				<section class="card bg-base-200">
-					<div class="card-body p-8">
-						<h2 class="text-2xl font-semibold mb-4 text-center">
-							Stay Updated
-						</h2>
-						<p class="max-w-md mx-auto mb-6 text-center text-base-content/80">
-							Subscribe to receive the latest articles, guides, and resources
-							directly in your inbox.
-						</p>
-						<div
-							class="flex flex-col sm:flex-row items-center justify-center gap-2 max-w-md mx-auto"
-						>
-							<input
-								type="email"
-								placeholder="Your email address"
-								class="input input-bordered w-full"
-							/>
-							<button class="btn btn-primary w-full sm:w-auto">Subscribe</button
-							>
-						</div>
-					</div>
-				</section>
+				<EmailSubscribe/>
 
 				<!-- Connect Section -->
 				<section class="mt-12 card bg-base-100 shadow-sm">
@@ -324,7 +302,5 @@ const PERSONAL_TITLE = "Amal Babu · ABK Datalab";
 			</main>
 		</div>
 		<Footer />
-
-		
 	</body>
 </html>

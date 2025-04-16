@@ -4,6 +4,7 @@ description: 'Learning efficient problem-solving techniques through understandin
 pubDate: 'Nov 20 2024'
 heroImage: '/images/blog/dev/sliding-window.webp'
 featured: true
+authors: ['Amal Babu']
 ---
 
 The sliding window technique is one of the most elegant and efficient approaches for solving array or string problems with contiguous elements. Let me share how understanding one sliding window problem completely changed my approach to algorithmic problem-solving.

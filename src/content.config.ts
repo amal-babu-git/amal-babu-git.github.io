@@ -11,6 +11,7 @@ const blog = defineCollection({
 		// Transform string to Date object
 		pubDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
+		authors: z.array(z.string()).optional().default(['amal-babu-git']),
 		heroImage: z.string().optional(),
 		subcategory: z.string().optional(),
 		featured: z.boolean().optional(),
