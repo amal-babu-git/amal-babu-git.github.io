@@ -15,7 +15,7 @@ const { post, defaultImage = '/thumbnail.png' } = Astro.props;
     <img 
       src={post.data.heroImage || defaultImage} 
       alt={post.data.title || "Blog post thumbnail"} 
-      class="w-full h-full object-cover" 
+      class="w-full h-full object-cover hover:scale-105 transition-transform duration-600" 
     />
   </figure>
   <div class="card-body p-6">
