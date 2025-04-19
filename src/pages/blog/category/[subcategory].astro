@@ -1,41 +1,46 @@
 ---
-import BaseHead from '../../../components/BaseHead.astro';
-import Header from '../../../components/Header.astro';
-import Footer from '../../../components/Footer.astro';
-import { SITE_TITLE } from '../../../consts';
-import { getCollection } from 'astro:content';
-import FormattedDate from '../../../components/FormattedDate.astro';
+import BaseHead from "../../../components/BaseHead.astro";
+import Header from "../../../components/Header.astro";
+import Footer from "../../../components/Footer.astro";
+import { SITE_TITLE } from "../../../consts";
+import { getCollection } from "astro:content";
+import FormattedDate from "../../../components/FormattedDate.astro";
+import PostCard from "../../../components/ui/PostCard.astro";
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  
-  // Extract all subdirectories from the blog collection
-  const subcategories = [...new Set(
-    posts.map(post => {
-      const pathParts = post.id.split('/');
-      return pathParts.length > 1 ? pathParts[0] : null;
-    }).filter(Boolean)
-  )];
-  
-  return subcategories.map(subcategory => ({
-    params: { subcategory },
-    props: { 
-      subcategory,
-      posts: posts
-        .filter(post => post.id.startsWith(subcategory + '/'))
-        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-    },
-  }));
+	const posts = await getCollection("blog");
+
+	// Extract all subdirectories from the blog collection
+	const subcategories = [
+		...new Set(
+			posts
+				.map((post) => {
+					const pathParts = post.id.split("/");
+					return pathParts.length > 1 ? pathParts[0] : null;
+				})
+				.filter(Boolean)
+		),
+	];
+
+	return subcategories.map((subcategory) => ({
+		params: { subcategory },
+		props: {
+			subcategory,
+			posts: posts
+				.filter((post) => post.id.startsWith(subcategory + "/"))
+				.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+		},
+	}));
 }
 
 // Format subcategory for display
 const formatSubcategory = (subcategory: string | null) => {
-  if (!subcategory) return '';
-  
-  return subcategory
-    .split('-')
-    .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+	if (!subcategory) return "";
+
+	return subcategory
+		.split("-")
+		.map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(" ");
 };
 
 const { subcategory, posts } = Astro.props;
@@ -44,61 +49,63 @@ const formattedSubcategory = formatSubcategory(subcategory);
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <BaseHead 
-      title={`${formattedSubcategory} Articles | ${SITE_TITLE}`} 
-      description={`Browse our collection of ${formattedSubcategory.toLowerCase()} articles`} 
-    />
-  </head>
-  <body>
-    <Header />
-    <main class="container mx-auto px-4 py-8">
-      <div class="flex flex-col md:flex-row md:items-center justify-between mb-8">
-        <div>
-          <a href="/blog" class="text-sm text-base-content/70 hover:text-primary mb-2 inline-flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to all articles
-          </a>
-          <h1 class="text-4xl font-bold">{formattedSubcategory}</h1>
-          <p class="text-base-content/70 mt-2">{posts.length} articles</p>
-        </div>
-        
-        <div class="breadcrumbs hidden md:block">
-          <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li>{formattedSubcategory}</li>
-          </ul>
-        </div>
-      </div>
+	<head>
+		<BaseHead
+			title={`${formattedSubcategory} Articles | ${SITE_TITLE}`}
+			description={`Browse our collection of ${formattedSubcategory.toLowerCase()} articles`}
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="container mx-auto px-4 py-8">
+			<div
+				class="flex flex-col md:flex-row md:items-center justify-between mb-8"
+			>
+				<div>
+					<a
+						href="/blog"
+						class="text-sm text-base-content/70 hover:text-primary mb-2 inline-flex items-center"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							class="h-4 w-4 mr-1"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M15 19l-7-7 7-7"
+							></path>
+						</svg>
+						Back to all articles
+					</a>
+					<h1 class="text-4xl font-bold">{formattedSubcategory}</h1>
+					<p class="text-base-content/70 mt-2">{posts.length} articles</p>
+				</div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        {posts.map(post => (
-          <div class="card bg-base-100 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full group/card">
-            <figure class="relative overflow-hidden h-48">
-              <img 
-                src={post.data.heroImage} 
-                alt="" 
-                class="w-full h-full object-cover transform group-hover/card:scale-110 transition-transform duration-700" 
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-base-300/80 to-transparent"></div>
-            </figure>
-            <div class="card-body p-5">
-              <h2 class="card-title group-hover/card:text-primary transition-colors">{post.data.title}</h2>
-              <p class="text-sm text-base-content/70">
-                <FormattedDate date={post.data.pubDate} />
-              </p>
-              <p class="text-sm line-clamp-2">{post.data.description}</p>
-              <div class="card-actions justify-end mt-4">
-                <a href={`/blog/${post.id}/`} class="btn btn-sm btn-outline btn-primary">Read Post</a>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </main>
-    <Footer />
-  </body>
+				<div class="breadcrumbs hidden md:block">
+					<ul>
+						<li><a href="/">Home</a></li>
+						<li><a href="/blog">Blog</a></li>
+						<li>{formattedSubcategory}</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+				{
+					posts.map((post) => (
+						<PostCard
+							post={post}
+							defaultImage="/images/blog/thumbnail.png"
+						/>
+					))
+				}
+			</div>
+		</main>
+		<Footer />
+	</body>
 </html>
