@@ -1,0 +1,11 @@
+---
+import SimpleLayout from "../../layouts/SimpleLayout.astro";
+import SignupForm from "../../components/auth/SignupForm.tsx";
+---
+
+<SimpleLayout
+	title="Sign Up"
+	description="Create a new account"
+>
+	<SignupForm client:load />
+</SimpleLayout>
