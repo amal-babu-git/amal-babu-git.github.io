@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { signup } from "../../lib/api"; // Import the signup function
 
 const SignupForm = () => {
 	const [email, setEmail] = useState("");
@@ -6,17 +7,51 @@ const SignupForm = () => {
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
+	const [error, setError] = useState<string | null>(null); // Add error state
+	const [loading, setLoading] = useState(false); // Add loading state
+	const [successMessage, setSuccessMessage] = useState<string | null>(null); // Add success message state
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
+		// Make handleSubmit async
 		e.preventDefault();
+		setError(null); // Clear previous errors
+		setSuccessMessage(null); // Clear previous success message
+
 		if (password !== confirmPassword) {
-			alert("Passwords do not match.");
+			setError("Passwords do not match.");
 			return;
 		}
-		const formData = { email, password, firstName, lastName };
-		console.log("Signup attempt:", formData);
-		alert("Signup functionality not implemented yet. Check console for data.");
-		// Reset form or redirect user as needed
+		setLoading(true); // Set loading state
+
+		try {
+			const userData = { email, password, firstName, lastName };
+			const result = await signup(userData); // Call the signup function
+			console.log("Signup successful:", result);
+			// Redirect to the email verification notice page
+			window.location.href = "/auth/verify-email-notice";
+			// No need to set success message here as we are redirecting
+		} catch (err: any) {
+			console.error("Signup failed:", err);
+			// Extract error message from API response if available
+			// Check for specific registration errors from openapi.json examples
+			let apiError = "Signup failed. Please try again.";
+			const detail = err.response?.data?.detail;
+			if (detail === "REGISTER_USER_ALREADY_EXISTS") {
+				apiError = "A user with this email already exists.";
+			} else if (
+				typeof detail === "object" &&
+				detail?.code === "REGISTER_INVALID_PASSWORD"
+			) {
+				apiError = `Password validation failed: ${detail.reason}`;
+			} else if (typeof detail === "string") {
+				apiError = detail;
+			}
+
+			setError(apiError); // Set error message state
+			alert(`Signup failed: ${apiError}`);
+		} finally {
+			setLoading(false); // Reset loading state
+		}
 	};
 
 	return (
@@ -101,11 +136,42 @@ const SignupForm = () => {
 							<p className="text-error text-xs mt-1">Passwords do not match.</p>
 						)}
 
+						{/* Display error message */}
+						{error && (
+							<div
+								role="alert"
+								className="alert alert-error mt-4"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									className="stroke-current shrink-0 h-6 w-6"
+									fill="none"
+									viewBox="0 0 24 24"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth="2"
+										d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+									/>
+								</svg>
+								<span>{error}</span>
+							</div>
+						)}
+
 						<button
 							type="submit"
-							className="btn btn-soft btn-primary mt-4"
+							className={`btn btn-soft btn-primary mt-4 ${
+								loading ? "btn-disabled" : ""
+							}`} // Add loading state to button
+							disabled={loading} // Disable button while loading
 						>
-							Sign Up
+							{loading ? (
+								<span className="loading loading-spinner"></span>
+							) : (
+								"Sign Up"
+							)}{" "}
+							{/* Show spinner */}
 						</button>
 					</fieldset>
 				</form>

@@ -1,0 +1,117 @@
+---
+import SimpleLayout from "../../layouts/SimpleLayout.astro";
+import VerifyEmailForm from "../../components/auth/VerifyEmailForm.tsx"; // Re-add this import
+import {API_ENDPOINT} from "../../lib/api.ts"; // Adjust the import path as necessary
+let verificationMessage: string | null = null;
+let verificationSuccess: boolean | null = null;
+const token = Astro.url.searchParams.get("token");
+
+// Attempt verification if a token is present in the URL
+if (token) {
+	try {
+		const response = await fetch(
+			`${API_ENDPOINT}/api/v1/auth/verify/verify`,
+			{
+				method: "POST",
+				headers: {
+					accept: "application/json",
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ token: token }),
+			}
+		);
+
+		if (response.ok) {
+			verificationMessage = "Email verified successfully!";
+			verificationSuccess = true;
+			// You could potentially redirect the user here upon success
+			// return Astro.redirect('/login?verified=true');
+		} else {
+			// Try to parse error detail from the API response
+			const errorData = await response
+				.json()
+				.catch(() => ({
+					detail: "Verification failed. Invalid or expired token.",
+				}));
+			verificationMessage = `Verification failed: ${errorData.detail || response.statusText}`;
+			verificationSuccess = false;
+		}
+	} catch (error) {
+		console.error("Verification API call failed:", error);
+		verificationMessage =
+			"An error occurred while trying to verify your email. Please try again later.";
+		verificationSuccess = false;
+	}
+}
+---
+
+<SimpleLayout
+	title="Verify Email"
+	description="Verify your email address to activate your account."
+>
+	{/* Display verification result message if available */}
+	{
+		verificationMessage && (
+			<div
+				role="alert"
+				class={`alert ${verificationSuccess ? "alert-success" : "alert-error"} mb-6 shadow-md`}
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="stroke-current shrink-0 h-6 w-6"
+					fill="none"
+					viewBox="0 0 24 24"
+				>
+					{verificationSuccess ? (
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+						/>
+					) : (
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M10 14l2-2m0 0l2-2m-2 2l-2 2m2-2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+						/>
+					)}
+				</svg>
+				<span>{verificationMessage}</span>
+			</div>
+		)
+	}
+
+	{
+		/* Render the form component only if verification wasn't attempted via URL, or if it failed */
+	}
+	{
+		(!token || verificationSuccess === false) && (
+			<>
+				{!token && (
+					<p class="mb-4 text-center">
+						Please check your email for the verification link, or enter the
+						token below.
+					</p>
+				)}
+				<VerifyEmailForm client:load />{" "}
+				{/* This line uses the imported component */}
+			</>
+		)
+	}
+
+	{/* Optionally, show a link to login page on successful verification */}
+	{
+		verificationSuccess === true && (
+			<div class="text-center mt-4">
+				<a
+					href="/auth/login"
+					class="btn btn-soft"
+				>
+					Proceed to Login
+				</a>
+			</div>
+		)
+	}
+</SimpleLayout>

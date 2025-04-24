@@ -1,0 +1,11 @@
+---
+import ProtectedLayout from "../layouts/ProtectedLayout.astro";
+import UserProfile from "../components/UserProfile.tsx";
+---
+
+<ProtectedLayout
+	title="My Profile"
+	description="View your profile details."
+>
+	<UserProfile client:load />
+</ProtectedLayout>

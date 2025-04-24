@@ -1,0 +1,45 @@
+---
+// src/layouts/ProtectedLayout.astro
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE } from "../consts";
+import "../styles/global.css";
+
+interface Props {
+	title: string;
+	description: string;
+	image?: string;
+}
+
+const { title, description, image } = Astro.props;
+---
+
+<html lang="en">
+	<head>
+		<BaseHead
+			title={title || SITE_TITLE}
+			description={description}
+			image={image}
+		/>
+		<!-- Client-side script for auth check -->
+		<script>
+			const token = localStorage.getItem("accessToken");
+			// Redirect to login if no token is found
+			if (!token && window.location.pathname !== "/auth/login") {
+				window.location.href = "/auth/login";
+			}
+		</script>
+	</head>
+	<body class="flex flex-col min-h-screen">
+		<Header />
+		<main class="flex-grow container mx-auto px-4 py-8 max-w-6xl">
+			<!-- Page title and description can be added here if needed -->
+			<div class="max-w-none mx-auto text-base-content/95">
+				<slot />
+				<!-- Protected content goes here -->
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>

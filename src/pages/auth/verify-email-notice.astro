@@ -1,0 +1,29 @@
+---
+import SimpleLayout from "../../layouts/SimpleLayout.astro";
+---
+
+<SimpleLayout
+	title="Check Your Email"
+	description="Please verify your email address."
+>
+	<div class="hero min-h-[calc(100vh-200px)] bg-base-100">
+		<div class="hero-content text-center">
+			<div class="max-w-md">
+				<h1 class="text-3xl font-bold mb-4">Check Your Inbox!</h1>
+				<p class="py-6">
+					We've sent a verification link to your email address. Please click the
+					link in the email to complete your signup process and activate your
+					account.
+				</p>
+				<p class="text-sm text-base-content/70">
+					If you don't see the email, please check your spam folder.
+				</p>
+				<a
+					href="/"
+					class="btn btn-link mt-4"
+					>Go back home</a
+				>
+			</div>
+		</div>
+	</div>
+</SimpleLayout>
