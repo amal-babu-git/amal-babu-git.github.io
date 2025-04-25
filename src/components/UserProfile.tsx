@@ -101,28 +101,15 @@ const UserProfile = () => {
 				</p>
 				<p>
 					<strong>Status:</strong>{" "}
-					<span
-						className={`badge ${
-							profile.is_active ? "badge-success" : "badge-error"
-						}`}
-					>
-						{profile.is_active ? "Active" : "Inactive"}
-					</span>
+					<span>{profile.is_active ? "Active" : "Inactive"}</span>
 				</p>
 				<p>
 					<strong>Verified:</strong>{" "}
-					<span
-						className={`badge ${
-							profile.is_verified ? "badge-info" : "badge-warning"
-						}`}
-					>
-						{profile.is_verified ? "Verified" : "Not Verified"}
-					</span>
+					<span>{profile.is_verified ? "Verified" : "Not Verified"}</span>
 				</p>
 				{profile.is_superuser && (
 					<p>
-						<strong>Role:</strong>{" "}
-						<span className="badge badge-primary">Admin</span>
+						<strong>Role:</strong> <span className="font-semibold">Admin</span>
 					</p>
 				)}
 				<div className="card-actions justify-end mt-4">
