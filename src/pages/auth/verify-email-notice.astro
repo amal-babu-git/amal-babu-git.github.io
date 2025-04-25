@@ -1,5 +1,6 @@
 ---
 import SimpleLayout from "../../layouts/SimpleLayout.astro";
+import ResendVerificationForm from "../../components/auth/ResendVerificationForm.tsx"; // Import the new component
 ---
 
 <SimpleLayout
@@ -15,7 +16,7 @@ import SimpleLayout from "../../layouts/SimpleLayout.astro";
 					link in the email to complete your signup process and activate your
 					account.
 				</p>
-				<p class="text-sm text-base-content/70">
+				<p class="text-sm text-base-content/70 mb-4">
 					If you don't see the email, please check your spam folder.
 				</p>
 				<a
@@ -23,6 +24,14 @@ import SimpleLayout from "../../layouts/SimpleLayout.astro";
 					class="btn btn-link mt-4"
 					>Go back home</a
 				>
+
+				<div class="divider my-6">OR</div>
+
+				<p class="text-sm text-base-content/70 mb-2">
+					Didn't receive the email?
+				</p>
+				{/* Add the Resend Verification Form Component */}
+				<ResendVerificationForm client:load />
 			</div>
 		</div>
 	</div>

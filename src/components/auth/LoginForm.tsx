@@ -35,7 +35,7 @@ const LoginForm = () => {
 			// Extract error message from API response if available
 			const apiError =
 				err.response?.data?.detail === "LOGIN_BAD_CREDENTIALS"
-					? "Invalid email or password."
+					? "Invalid email or password. If both are correct, please verify your account"
 					: err.response?.data?.detail ||
 					  "Login failed. Please check your credentials.";
 			setError(apiError); // Set error message state
@@ -103,7 +103,7 @@ const LoginForm = () => {
 						{error && (
 							<div
 								role="alert"
-								className="alert alert-error mt-4"
+								className="alert alert-vertical bg-base-300 mt-4"
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +118,9 @@ const LoginForm = () => {
 										d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
 									/>
 								</svg>
-								<span>{error}</span>
+								<span>
+									{error} <a className="link" href="/auth/verify-email-notice">Verify Email</a>
+								</span>
 							</div>
 						)}
 

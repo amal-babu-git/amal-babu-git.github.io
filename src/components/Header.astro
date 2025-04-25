@@ -1,6 +1,7 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
 import { SITE_TITLE } from "../consts";
+import LoginNavbarButton from "./auth/LoginNavbarButton";
 ---
 
 <div
@@ -80,36 +81,21 @@ import { SITE_TITLE } from "../consts";
 	<div class="navbar-center hidden lg:flex">
 		<ul class="menu menu-horizontal px-1">
 			<li>
-				<HeaderLink
-					href="/"
-					>Home</HeaderLink
-				>
+				<HeaderLink href="/">Home</HeaderLink>
 			</li>
 			<li>
-				<HeaderLink
-					href="/blog"
-					>Blog</HeaderLink
-				>
+				<HeaderLink href="/blog">Blog</HeaderLink>
 			</li>
 			<!-- <li><HeaderLink href="/guides" class="no-underline">Guides</HeaderLink></li>  -->
 			<li>
-				<HeaderLink
-					href="/projects"
-					>Projects & OpenSource</HeaderLink
-				>
+				<HeaderLink href="/projects">Projects & OpenSource</HeaderLink>
 			</li>
 			<li>
-				<HeaderLink
-					href="/services"
-					>Services</HeaderLink
-				>
+				<HeaderLink href="/services">Services</HeaderLink>
 			</li>
 
 			<li>
-				<HeaderLink
-					href="/about"
-					>About</HeaderLink
-				>
+				<HeaderLink href="/about">About</HeaderLink>
 			</li>
 		</ul>
 	</div>
@@ -166,13 +152,7 @@ import { SITE_TITLE } from "../consts";
 					></path>
 				</svg>
 			</a>
-			<a
-				href="/auth/login"
-				class="btn btn-md rounded-full font-light me-1"
-			>
-				Login
-				
-			</a>
+			<LoginNavbarButton client:load/>
 		</div>
 	</div>
 </div>

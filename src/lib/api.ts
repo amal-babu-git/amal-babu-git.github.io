@@ -207,6 +207,15 @@ export const logout = async () => {
 	}
 };
 
+// New function to request a verification token resend
+export const requestVerificationToken = async (email: string) => {
+	const response = await apiClient.post(
+		"/api/v1/auth/verify/request-verify-token",
+		{ email } // Body should contain the email
+	);
+	return response.data; // Endpoint might return a success message or just 200 OK
+};
+
 // New function to get user profile
 export const getUserProfile = async () => {
 	// Ensure token is set in headers before making the request
