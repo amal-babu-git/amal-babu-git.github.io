@@ -2,7 +2,7 @@
 title: 'AI Character Creation & Monetization Plan - Version 0.1.0'
 description: 'This comprehensive guide outlines the step-by-step process to create, develop, and monetize an AI-generated character for content creation and business purposes. The plan is designed for software engineers with basic image generation knowledge who want to enter the AI character market.'
 pubDate: 'Dec 14 2024'
-heroImage: '/images/blog/dev/genaiv1.png'
+heroImage: '/images/blog/gen-ai/genaiv1.png'
 featured: true
 ---
 
