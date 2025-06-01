@@ -7,6 +7,8 @@ import {
 	SITE_DESCRIPTION,
 	SITE_URL,
 	AUTHOR,
+	KEYWORDS,
+	SOCIAL_LINKS,
 } from "../consts";
 
 interface Props {
@@ -14,6 +16,7 @@ interface Props {
 	description: string;
 	image?: string;
 	article?: boolean;
+	keywords?: string;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || SITE_URL);
@@ -22,7 +25,10 @@ const {
 	description,
 	image = "/images/site-og-image.jpg",
 	article = false,
+	keywords = KEYWORDS,
 } = Astro.props;
+
+const fullTitle = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
 ---
 
 <!-- Global Metadata -->
@@ -99,18 +105,44 @@ const {
 />
 
 <!-- Primary Meta Tags -->
-<title>{title}</title>
+<title>{fullTitle}</title>
 <meta
 	name="title"
-	content={title}
+	content={fullTitle}
 />
 <meta
 	name="description"
 	content={description}
 />
 <meta
+	name="keywords"
+	content={keywords}
+/>
+<meta
 	name="author"
 	content={AUTHOR}
+/>
+<meta
+	name="robots"
+	content="index, follow"
+/>
+<meta
+	name="language"
+	content="English"
+/>
+<meta
+	name="revisit-after"
+	content="7 days"
+/>
+
+<!-- Professional Identity -->
+<meta
+	name="profession"
+	content="Software Engineer, Software Developer, GenAI Developer"
+/>
+<meta
+	name="expertise"
+	content="Python, FastAPI, Django, React, Next.js, Machine Learning, Artificial Intelligence"
 />
 
 <!-- Open Graph / Facebook -->
@@ -124,7 +156,7 @@ const {
 />
 <meta
 	property="og:title"
-	content={title}
+	content={fullTitle}
 />
 <meta
 	property="og:description"
@@ -138,6 +170,56 @@ const {
 	property="og:site_name"
 	content={SITE_TITLE}
 />
+<meta
+	property="og:locale"
+	content="en_US"
+/>
+
+<!-- Twitter -->
+<meta
+	name="twitter:card"
+	content="summary_large_image"
+/>
+<meta
+	name="twitter:url"
+	content={Astro.url}
+/>
+<meta
+	name="twitter:title"
+	content={fullTitle}
+/>
+<meta
+	name="twitter:description"
+	content={description}
+/>
+<meta
+	name="twitter:image"
+	content={new URL(image, Astro.site || SITE_URL)}
+/>
+
+<!-- LinkedIn -->
+<meta
+	property="article:author"
+	content={SOCIAL_LINKS.linkedin}
+/>
+
+<!-- Additional Professional Meta -->
+<meta
+	name="category"
+	content="Technology, Software Development, AI, Machine Learning"
+/>
+<meta
+	name="coverage"
+	content="Worldwide"
+/>
+<meta
+	name="distribution"
+	content="Global"
+/>
+<meta
+	name="rating"
+	content="General"
+/>
 
 <!-- Additional Meta -->
 <meta
@@ -148,3 +230,78 @@ const {
 	name="format-detection"
 	content="telephone=no"
 />
+
+<!-- Structured Data for Professional Profile -->
+<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Person",
+		"name": "Amal Babu",
+		"url": "https://amal-babu-git.github.io",
+		"image": "https://amal-babu-git.github.io/images/amal-babu-profile.jpg",
+		"jobTitle": [
+			"Software Engineer",
+			"Software Developer",
+			"GenAI Developer",
+			"Full-Stack Developer"
+		],
+		"worksFor": {
+			"@type": "Organization",
+			"name": "ABK DataLab"
+		},
+		"description": "Software Engineer and GenAI Developer specializing in Python, FastAPI, React, Machine Learning, and AI technologies",
+		"knowsAbout": [
+			"Python Programming",
+			"FastAPI",
+			"Django",
+			"React.js",
+			"Next.js",
+			"Machine Learning",
+			"Artificial Intelligence",
+			"Web Development",
+			"API Development",
+			"Software Engineering",
+			"GenAI Development",
+			"ComfyUI",
+			"LoRA Models"
+		],
+		"sameAs": [
+			"https://github.com/amal-babu-git",
+			"https://www.linkedin.com/in/amalbabudev",
+			"https://medium.com/@amalbabuk"
+		],
+		"alumniOf": [
+			{
+				"@type": "EducationalOrganization",
+				"name": "Srinivas Institute of Technology",
+				"degree": "Master of Computer Applications"
+			}
+		],
+		"email": "developer.amalbabu@gmail.com",
+		"address": {
+			"@type": "PostalAddress",
+			"addressLocality": "Bangalore",
+			"addressCountry": "India"
+		}
+	}
+</script>
+
+<!-- Website Structured Data -->
+<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "Amal Babu · ABK DataLab",
+		"url": "https://amal-babu-git.github.io",
+		"description": "Software engineering insights, tutorials, and guides on Python, AI, and modern web development",
+		"author": {
+			"@type": "Person",
+			"name": "Amal Babu"
+		},
+		"potentialAction": {
+			"@type": "SearchAction",
+			"target": "https://amal-babu-git.github.io/search?q={search_term_string}",
+			"query-input": "required name=search_term_string"
+		}
+	}
+</script>

@@ -1,4 +1,18 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://amalbabu.com/sitemap-index.xml
+# Sitemaps
+Sitemap: https://amal-babu-git.github.io/sitemap-index.xml
+
+# Allow all crawlers to access the site
+# Priority pages for crawlers
+Allow: /blog/
+Allow: /projects/
+Allow: /services/
+Allow: /about/
+
+# Block specific paths if needed (none currently)
+# Disallow: /private/
+
+# Crawl delay (optional)
+Crawl-delay: 1
