@@ -1,0 +1,21 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import LicenseLayout from "../../layouts/LicenseLayout.astro";
+import { render } from "astro:content";
+
+export async function getStaticPaths() {
+	const licenses = await getCollection("licenses");
+	return licenses.map((license) => ({
+		params: { slug: license.id },
+		props: license,
+	}));
+}
+type Props = CollectionEntry<"licenses">;
+
+const license = Astro.props;
+const { Content } = await render(license);
+---
+
+<LicenseLayout {...license.data}>
+	<Content />
+</LicenseLayout>

@@ -1,0 +1,285 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+import { SITE_DESCRIPTION } from "../../consts";
+import { getCollection } from "astro:content";
+
+const LICENSES_TITLE = "Software Licenses | Amal Babu · ABK Datalab";
+
+// Get all licenses sorted by effective date (most recent first)
+const allLicenses = (await getCollection("licenses")).sort(
+	(a, b) => b.data.effectiveDate.valueOf() - a.data.effectiveDate.valueOf()
+);
+
+// Group licenses by status
+const activeLicenses = allLicenses.filter(
+	(license) => license.data.status === "active"
+);
+const deprecatedLicenses = allLicenses.filter(
+	(license) => license.data.status === "deprecated"
+);
+const draftLicenses = allLicenses.filter(
+	(license) => license.data.status === "draft"
+);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={LICENSES_TITLE}
+			description={SITE_DESCRIPTION}
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="container mx-auto px-4 py-8">
+			<div class="max-w-6xl mx-auto">
+				<div class="text-center mb-8">
+					<h1 class="text-4xl font-bold mb-4">Software Licenses</h1>
+					<p class="text-lg text-base-content/70 max-w-2xl mx-auto">
+						Official software licenses governing the use, distribution, and
+						modification of software developed by Amal Babu.
+					</p>
+				</div>
+
+				<!-- Active Licenses -->
+				{
+					activeLicenses.length > 0 && (
+						<section class="mb-12">
+							<h2 class="text-2xl font-semibold mb-6 flex items-center">
+								<span class="badge badge-soft badge-sm mr-3">Active</span>
+								Current Licenses
+							</h2>
+							<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+								{activeLicenses.map((license) => (
+									<div class="card bg-base-100 shadow-md hover:shadow-lg transition-shadow">
+										<div class="card-body">
+											<h3 class="card-title text-lg">
+												<a
+													href={`/licenses/${license.id}`}
+													class="link link-hover"
+												>
+													{license.data.title}
+												</a>
+											</h3>
+											<div class="text-sm text-base-content/70 mb-3">
+												<div class="flex justify-between items-center mb-1">
+													<span>
+														Version: <strong>{license.data.version}</strong>
+													</span>
+													<span class="badge badge-soft badge-xs">
+														{license.data.status}
+													</span>
+												</div>
+												<div class="flex items-center">
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														class="h-3 w-3 mr-1"
+														fill="none"
+														viewBox="0 0 24 24"
+														stroke="currentColor"
+													>
+														<path
+															stroke-linecap="round"
+															stroke-linejoin="round"
+															stroke-width="2"
+															d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+														/>
+													</svg>
+													<FormattedDate date={license.data.effectiveDate} />
+												</div>
+											</div>
+											<p class="text-sm text-base-content/80 line-clamp-3">
+												{license.data.description}
+											</p>
+											<div class="card-actions justify-end mt-4">
+												<a
+													href={`/licenses/${license.id}`}
+													class="btn btn-soft btn-sm"
+												>
+													View License
+												</a>
+											</div>
+										</div>
+									</div>
+								))}
+							</div>
+						</section>
+					)
+				}
+
+				<!-- Draft Licenses -->
+				{
+					draftLicenses.length > 0 && (
+						<section class="mb-12">
+							<h2 class="text-2xl font-semibold mb-6 flex items-center">
+								<span class="badge badge-ghost badge-sm mr-3">Draft</span>
+								Draft Licenses
+							</h2>
+							<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+								{draftLicenses.map((license) => (
+									<div class="card bg-base-100 shadow-md hover:shadow-lg transition-shadow opacity-75">
+										<div class="card-body">
+											<h3 class="card-title text-lg">
+												<a
+													href={`/licenses/${license.id}`}
+													class="link link-hover"
+												>
+													{license.data.title}
+												</a>
+											</h3>
+											<div class="text-sm text-base-content/70 mb-3">
+												<div class="flex justify-between items-center mb-1">
+													<span>
+														Version: <strong>{license.data.version}</strong>
+													</span>
+													<span class="badge badge-ghost badge-xs">
+														{license.data.status}
+													</span>
+												</div>
+												<div class="flex items-center">
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														class="h-3 w-3 mr-1"
+														fill="none"
+														viewBox="0 0 24 24"
+														stroke="currentColor"
+													>
+														<path
+															stroke-linecap="round"
+															stroke-linejoin="round"
+															stroke-width="2"
+															d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+														/>
+													</svg>
+													<FormattedDate date={license.data.effectiveDate} />
+												</div>
+											</div>
+											<p class="text-sm text-base-content/80 line-clamp-3">
+												{license.data.description}
+											</p>
+											<div class="card-actions justify-end mt-4">
+												<a
+													href={`/licenses/${license.id}`}
+													class="btn btn-ghost btn-sm"
+												>
+													View Draft
+												</a>
+											</div>
+										</div>
+									</div>
+								))}
+							</div>
+						</section>
+					)
+				}
+
+				<!-- Deprecated Licenses -->
+				{
+					deprecatedLicenses.length > 0 && (
+						<section class="mb-12">
+							<h2 class="text-2xl font-semibold mb-6 flex items-center">
+								<span class="badge badge-outline badge-sm mr-3">
+									Deprecated
+								</span>
+								Deprecated Licenses
+							</h2>
+							<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+								{deprecatedLicenses.map((license) => (
+									<div class="card bg-base-100 shadow-md hover:shadow-lg transition-shadow opacity-60">
+										<div class="card-body">
+											<h3 class="card-title text-lg">
+												<a
+													href={`/licenses/${license.id}`}
+													class="link link-hover"
+												>
+													{license.data.title}
+												</a>
+											</h3>
+											<div class="text-sm text-base-content/70 mb-3">
+												<div class="flex justify-between items-center mb-1">
+													<span>
+														Version: <strong>{license.data.version}</strong>
+													</span>
+													<span class="badge badge-outline badge-xs">
+														{license.data.status}
+													</span>
+												</div>
+												<div class="flex items-center">
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														class="h-3 w-3 mr-1"
+														fill="none"
+														viewBox="0 0 24 24"
+														stroke="currentColor"
+													>
+														<path
+															stroke-linecap="round"
+															stroke-linejoin="round"
+															stroke-width="2"
+															d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+														/>
+													</svg>
+													<FormattedDate date={license.data.effectiveDate} />
+												</div>
+											</div>
+											<p class="text-sm text-base-content/80 line-clamp-3">
+												{license.data.description}
+											</p>
+											<div class="card-actions justify-end mt-4">
+												<a
+													href={`/licenses/${license.id}`}
+													class="btn btn-outline btn-sm"
+												>
+													View (Deprecated)
+												</a>
+											</div>
+										</div>
+									</div>
+								))}
+							</div>
+						</section>
+					)
+				}
+
+				{
+					allLicenses.length === 0 && (
+						<div class="text-center py-12">
+							<p class="text-lg text-base-content/70">
+								No licenses available at the moment.
+							</p>
+						</div>
+					)
+				}
+
+				<!-- Legal Notice -->
+				<div class="mt-12 p-6 bg-base-200 rounded-lg">
+					<h3 class="text-lg font-semibold mb-3">Legal Notice</h3>
+					<p class="text-sm text-base-content/80 leading-relaxed">
+						These licenses govern the use of software developed by Amal Babu. By
+						using any software covered by these licenses, you agree to be bound
+						by the terms and conditions specified. For questions about licensing
+						or to obtain commercial licenses, please contact <a
+							href="mailto:developer.amalbabu@gmail.com"
+							class="link"
+							>developer.amalbabu@gmail.com</a
+						>.
+					</p>
+				</div>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.line-clamp-3 {
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+</style>

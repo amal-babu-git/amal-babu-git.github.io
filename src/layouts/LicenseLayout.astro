@@ -1,0 +1,121 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import "../styles/global.css";
+
+type Props = CollectionEntry<"licenses">["data"];
+
+const {
+	title,
+	description,
+	effectiveDate,
+	updatedDate,
+	author,
+	version,
+	status,
+} = Astro.props;
+---
+
+<html lang="en">
+	<head>
+		<BaseHead
+			title={title}
+			description={description}
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="container mx-auto px-4 py-8">
+			<article>
+				<div
+					class="max-w-6xl mx-auto rounded-lg p-4 shadow-md bg-base-100 text-base-content/85"
+				>
+					<div class="mb-4">
+						<section class="p-2 mt-3 mb-2">
+							<h1 class="text-3xl font-semibold mb-3 text-center">
+								{title}
+							</h1>
+							<div class="text-center text-sm text-base-content/70 space-y-1">
+								<p>
+									<span class="p-1 me-1"
+										>Version: <strong>{version}</strong></span
+									>
+									<span class="p-1 me-1"
+										>Status:
+										<span
+											class={`badge badge-sm ${
+												status === "active"
+													? "badge-soft"
+													: status === "deprecated"
+														? "badge-outline"
+														: "badge-ghost"
+											}`}
+										>
+											{status}
+										</span>
+									</span>
+								</p>
+								<p>
+									<span class="p-1 me-1">Author: {author}</span>
+								</p>
+							</div>
+						</section>
+						<div
+							class="text-base-content/80 mb-3 pb-2 border-b border-base-300"
+						>
+							<div
+								class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2"
+							>
+								<span class="inline-flex items-center text-sm">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-4 w-4 mr-1"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+										></path>
+									</svg>
+									Effective Date: <FormattedDate date={effectiveDate} />
+								</span>
+								{
+									updatedDate && (
+										<span class="inline-flex items-center text-sm">
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												class="h-4 w-4 mr-1"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke="currentColor"
+											>
+												<path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													stroke-width="2"
+													d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+												/>
+											</svg>
+											Last Updated: <FormattedDate date={updatedDate} />
+										</span>
+									)
+								}
+							</div>
+						</div>
+					</div>
+					<div class="prose prose-lg max-w-none text-base-content/90">
+						<slot />
+					</div>
+				</div>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
