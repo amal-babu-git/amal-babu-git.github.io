@@ -175,24 +175,45 @@
 
 		const observerOptions = {
 			root: null,
-			rootMargin: "-20% 0px -70% 0px", // Adjust these values to control when sections are considered "active"
-			threshold: 0.1,
+			rootMargin: "-10% 0px -10% 0px", // Smaller margins for more accurate detection
+			threshold: [0, 0.1, 0.25, 0.5, 0.75, 1.0], // More granular thresholds
 		};
 
-		const observer = new IntersectionObserver((entries) => {
-			entries.forEach((entry) => {
-				if (entry.isIntersecting) {
-					const activeSection = entry.target.id;
+		let currentActiveSection = "";
+		const sectionVisibility = new Map();
 
-					dockButtons.forEach((button) => {
-						if (button.getAttribute("data-section") === activeSection) {
-							button.classList.add("dock-active");
-						} else {
-							button.classList.remove("dock-active");
-						}
-					});
+		const observer = new IntersectionObserver((entries) => {
+			// Update visibility map
+			entries.forEach((entry) => {
+				sectionVisibility.set(entry.target.id, {
+					isIntersecting: entry.isIntersecting,
+					intersectionRatio: entry.intersectionRatio
+				});
+			});
+
+			// Find the most visible section
+			let mostVisibleSection = "";
+			let highestRatio = 0;
+
+			sectionVisibility.forEach((data, sectionId) => {
+				if (data.isIntersecting && data.intersectionRatio > highestRatio) {
+					highestRatio = data.intersectionRatio;
+					mostVisibleSection = sectionId;
 				}
 			});
+
+			// Only update if we have a different active section
+			if (mostVisibleSection && mostVisibleSection !== currentActiveSection) {
+				currentActiveSection = mostVisibleSection;
+				
+				dockButtons.forEach((button) => {
+					if (button.getAttribute("data-section") === mostVisibleSection) {
+						button.classList.add("dock-active");
+					} else {
+						button.classList.remove("dock-active");
+					}
+				});
+			}
 		}, observerOptions);
 
 		// Observe all sections
