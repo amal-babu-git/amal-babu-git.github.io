@@ -493,10 +493,14 @@ import SimpleLayout from "../layouts/SimpleLayout.astro";
 		</h2>
 
 		<!-- Web Development Service -->
-		<div class="collapse collapse-arrow bg-base-200 shadow-lg mb-3 sm:mb-4">
+		<div
+			class="collapse collapse-arrow bg-base-200 shadow-lg mb-3 sm:mb-4"
+			id="web-development-service"
+		>
 			<input
 				type="radio"
 				name="services-accordion"
+				id="web-development-toggle"
 			/>
 			<div class="collapse-title text-lg sm:text-xl font-semibold bg-base-200">
 				<div class="flex items-center justify-between">
@@ -788,10 +792,14 @@ import SimpleLayout from "../layouts/SimpleLayout.astro";
 		</div>
 
 		<!-- Custom LoRA Development Service -->
-		<div class="collapse collapse-arrow bg-base-100 shadow-lg mb-4">
+		<div
+			class="collapse collapse-arrow bg-base-100 shadow-lg mb-4"
+			id="lora-development-service"
+		>
 			<input
 				type="radio"
 				name="services-accordion"
+				id="lora-development-toggle"
 			/>
 			<div class="collapse-title text-xl font-semibold bg-base-100">
 				<div class="flex items-center">
@@ -896,10 +904,14 @@ import SimpleLayout from "../layouts/SimpleLayout.astro";
 		</div>
 
 		<!-- RAG Development Service -->
-		<div class="collapse collapse-arrow bg-base-100 shadow-lg mb-4">
+		<div
+			class="collapse collapse-arrow bg-base-100 shadow-lg mb-4"
+			id="rag-development-service"
+		>
 			<input
 				type="radio"
 				name="services-accordion"
+				id="rag-development-toggle"
 			/>
 			<div class="collapse-title text-xl font-semibold bg-base-100">
 				<div class="flex items-center justify-between">
@@ -1007,10 +1019,14 @@ import SimpleLayout from "../layouts/SimpleLayout.astro";
 		</div>
 
 		<!-- AI Agentic Chatbot Service -->
-		<div class="collapse collapse-arrow bg-base-100 shadow-lg mb-4">
+		<div
+			class="collapse collapse-arrow bg-base-100 shadow-lg mb-4"
+			id="ai-chatbot-service"
+		>
 			<input
 				type="radio"
 				name="services-accordion"
+				id="ai-chatbot-toggle"
 			/>
 			<div class="collapse-title text-xl font-semibold bg-base-100">
 				<div class="flex items-center justify-between">
@@ -1415,3 +1431,42 @@ import SimpleLayout from "../layouts/SimpleLayout.astro";
 		</div>
 	</section>
 </SimpleLayout>
+
+<script>
+	// Handle accordion scroll behavior
+	document.addEventListener("DOMContentLoaded", function () {
+		const accordionInputs = document.querySelectorAll(
+			'input[name="services-accordion"]'
+		);
+
+		accordionInputs.forEach((input) => {
+			input.addEventListener("change", function (event) {
+				const target = event.target as HTMLInputElement;
+
+				if (target && target.checked) {
+					// Find the parent service section
+					const serviceSection = target.closest(".collapse") as HTMLElement;
+
+					if (serviceSection) {
+						// Add a small delay to allow the accordion to open
+						setTimeout(() => {
+							// Calculate scroll position with extra offset for better visibility
+							const rect = serviceSection.getBoundingClientRect();
+							const offset = 80; // Extra space from top
+							const scrollPosition = window.pageYOffset + rect.top - offset;
+
+							// Smooth scroll to calculated position
+							window.scrollTo({
+								top: scrollPosition,
+								behavior: "smooth",
+							});
+
+							// Optional: Focus on the section for accessibility
+							serviceSection.focus({ preventScroll: true });
+						}, 150); // Small delay to allow animation to start
+					}
+				}
+			});
+		});
+	});
+</script>
