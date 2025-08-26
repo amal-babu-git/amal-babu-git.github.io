@@ -2130,12 +2130,67 @@ import SimpleLayout from "../layouts/SimpleLayout.astro";
 </SimpleLayout>
 
 <script>
-	// Handle accordion scroll behavior
+	// Handle accordion scroll behavior and URL fragment support
 	document.addEventListener("DOMContentLoaded", function () {
 		const accordionInputs = document.querySelectorAll(
 			'input[name="services-accordion"]'
 		);
 
+		// Function to open and scroll to a specific service section
+		function openServiceSection(serviceId: string) {
+			const serviceSection = document.getElementById(serviceId) as HTMLElement;
+			if (serviceSection) {
+				// Find the corresponding radio input
+				const radioInput = serviceSection.querySelector(
+					'input[type="radio"]'
+				) as HTMLInputElement;
+				if (radioInput) {
+					// Check the radio input to open the accordion
+					radioInput.checked = true;
+
+					// Add a small delay to allow the accordion to open
+					setTimeout(() => {
+						// Calculate scroll position with extra offset for better visibility
+						const rect = serviceSection.getBoundingClientRect();
+						const offset = 80; // Extra space from top
+						const scrollPosition = window.pageYOffset + rect.top - offset;
+
+						// Smooth scroll to calculated position
+						window.scrollTo({
+							top: scrollPosition,
+							behavior: "smooth",
+						});
+
+						// Focus on the section for accessibility
+						serviceSection.focus({ preventScroll: true });
+
+						// Update the URL hash without triggering scroll
+						history.replaceState(null, "", "#" + serviceId);
+					}, 150); // Small delay to allow animation to start
+				}
+			}
+		}
+
+		// Check for URL fragment on page load
+		const urlFragment = window.location.hash.substring(1); // Remove the '#'
+		if (urlFragment) {
+			// List of valid service IDs
+			const validServiceIds = [
+				"web-development-service",
+				"lora-development-service",
+				"rag-development-service",
+				"ai-chatbot-service",
+			];
+
+			if (validServiceIds.includes(urlFragment)) {
+				// Small delay to ensure DOM is fully loaded
+				setTimeout(() => {
+					openServiceSection(urlFragment);
+				}, 100);
+			}
+		}
+
+		// Handle accordion manual interactions
 		accordionInputs.forEach((input) => {
 			input.addEventListener("change", function (event) {
 				const target = event.target as HTMLInputElement;
@@ -2144,7 +2199,10 @@ import SimpleLayout from "../layouts/SimpleLayout.astro";
 					// Find the parent service section
 					const serviceSection = target.closest(".collapse") as HTMLElement;
 
-					if (serviceSection) {
+					if (serviceSection && serviceSection.id) {
+						// Update URL hash when accordion is manually opened
+						history.replaceState(null, "", "#" + serviceSection.id);
+
 						// Add a small delay to allow the accordion to open
 						setTimeout(() => {
 							// Calculate scroll position with extra offset for better visibility
@@ -2158,12 +2216,29 @@ import SimpleLayout from "../layouts/SimpleLayout.astro";
 								behavior: "smooth",
 							});
 
-							// Optional: Focus on the section for accessibility
+							// Focus on the section for accessibility
 							serviceSection.focus({ preventScroll: true });
 						}, 150); // Small delay to allow animation to start
 					}
 				}
 			});
+		});
+
+		// Handle hash changes (when someone clicks browser back/forward or changes URL)
+		window.addEventListener("hashchange", function () {
+			const newFragment = window.location.hash.substring(1);
+			if (newFragment) {
+				const validServiceIds = [
+					"web-development-service",
+					"lora-development-service",
+					"rag-development-service",
+					"ai-chatbot-service",
+				];
+
+				if (validServiceIds.includes(newFragment)) {
+					openServiceSection(newFragment);
+				}
+			}
 		});
 	});
 </script>
