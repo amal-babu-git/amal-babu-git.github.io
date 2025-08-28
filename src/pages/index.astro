@@ -6,16 +6,17 @@ import { SITE_DESCRIPTION } from "../consts";
 import { getCollection } from "astro:content";
 import EmailSubscribe from "../components/EmailSubscribe";
 import PostCard from "../components/ui/PostCard.astro";
+import CTASection from "../components/ui/CTASection.astro";
 
 // Get all blog posts sorted by date
 const allPosts = (await getCollection("blog")).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
 // Filter featured posts and limit to 3
 const featuredPosts = allPosts
-  .filter((post) => post.data.featured === true)
-  .slice(0, 3);
+	.filter((post) => post.data.featured === true)
+	.slice(0, 3);
 
 // Get recent posts (excluding featured ones to avoid duplication)
 const recentPosts = allPosts.filter((post) => !post.data.featured).slice(0, 3);
@@ -28,164 +29,176 @@ const PERSONAL_TITLE = "Amal Babu · ABK Datalab - Freelance Web Developer";
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <BaseHead title={PERSONAL_TITLE} description={SITE_DESCRIPTION} />
-    <meta
-      name="keywords"
-      content="Freelance Web Developer, Full-Stack Development, Website Development Services, React Developer, Next.js Expert, TypeScript Development, Amal Babu, ABK Datalab, Custom Website Development, Business Website, Professional Web Services, Python Developer, Machine Learning, AI, Gen AI, FastAPI, Django, ComfyUI, LoRA Models, Image Generation, Data Science"
-    />
-  </head>
-  <body>
-    <Header />
-    <div class="container mx-auto px-4">
-      <main class="max-w-5xl mx-auto mb-16">
-        <!-- Hero Section -->
-        <section class="mb-12 my-8">
-          <div class="card bg-base-100 shadow-sm">
-            <div class="card-body">
-              <h2
-                class="text-2xl font-semibold mb-4 border-b border-base-200 pb-2"
-              >
-                Amal Babu . ABK DataLab
-              </h2>
-              <div class="text-base text-base-content/80">
-                <p class="mb-4">
-                  Professional development services and personal insights into
-                  modern web technologies and AI innovations. Explore my service
-                  offerings alongside my thoughts and experiences with
-                  cutting-edge technologies.
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                  <div>
-                    <h3 class="font-semibold text-base-content mb-2">
-                      Professional Services
-                    </h3>
-                    <p class="text-sm text-base-content/70">
-                      Web development solutions using modern frameworks, AI/ML
-                      implementations including custom LoRA models, and emerging
-                      technologies like RAG systems and intelligent agents.
-                    </p>
-                  </div>
-                  <div>
-                    <h3 class="font-semibold text-base-content mb-2">
-                      Blog & Articles
-                    </h3>
-                    <p class="text-sm text-base-content/70">
-                      Personal perspectives on emerging technologies,
-                      development experiences, AI innovations, and industry
-                      trends that shape the future of software development.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="flex flex-wrap gap-2 mt-6">
-                <span class="badge badge-outline">Python</span>
-                <span class="badge badge-outline">FastAPI</span>
-                <span class="badge badge-outline">Django</span>
-                <span class="badge badge-outline">JavaScript</span>
-                <span class="badge badge-outline">React</span>
-                <span class="badge badge-outline">Next.js</span>
-                <span class="badge badge-outline">PostgreSQL</span>
-                <span class="badge badge-outline">Machine Learning</span>
-                <span class="badge badge-outline">Generative AI</span>
-                <span class="badge badge-outline">RAGs</span>
-                <span class="badge badge-outline">Agentic AI</span>
-                <span class="badge badge-outline"
-                  >Containerization - Docker</span
-                >
-                <span class="badge badge-outline">ComfyUI</span>
-                <span class="badge badge-outline">LoRA Models</span>
-                <span class="badge badge-outline">Image Generation</span>
-              </div>
-              <div
-                class="flex flex-wrap justify-center md:justify-start gap-4 mt-6"
-              >
-                <a href="/services" class="btn btn-neutral"
-                  >View Services & Pricing</a
-                >
-                <a href="#contact" class="btn btn-outline">Get Free Quote</a>
-              </div>
-            </div>
-          </div>
-        </section>
+	<head>
+		<BaseHead
+			title={PERSONAL_TITLE}
+			description={SITE_DESCRIPTION}
+		/>
+		<meta
+			name="keywords"
+			content="Freelance Web Developer, Full-Stack Development, Website Development Services, React Developer, Next.js Expert, TypeScript Development, Amal Babu, ABK Datalab, Custom Website Development, Business Website, Professional Web Services, Python Developer, Machine Learning, AI, Gen AI, FastAPI, Django, ComfyUI, LoRA Models, Image Generation, Data Science"
+		/>
+	</head>
+	<body>
+		<Header />
+		<div class="container mx-auto px-4">
+			<main class="max-w-5xl mx-auto mb-16">
+				<!-- Hero Section -->
+				<section class="mb-12 my-8">
+					<div class="card bg-base-100 shadow-sm">
+						<div class="card-body">
+							<h2
+								class="text-2xl font-semibold mb-4 border-b border-base-200 pb-2"
+							>
+								Amal Babu . ABK DataLab
+							</h2>
+							<div class="text-base text-base-content/80">
+								<p class="mb-4">
+									Professional development services and personal insights into
+									modern web technologies and AI innovations. Explore my service
+									offerings alongside my thoughts and experiences with
+									cutting-edge technologies.
+								</p>
+								<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+									<div>
+										<h3 class="font-semibold text-base-content mb-2">
+											Professional Services
+										</h3>
+										<p class="text-sm text-base-content/70">
+											Web development solutions using modern frameworks, AI/ML
+											implementations including custom LoRA models, and emerging
+											technologies like RAG systems and intelligent agents.
+										</p>
+									</div>
+									<div>
+										<h3 class="font-semibold text-base-content mb-2">
+											Blog & Articles
+										</h3>
+										<p class="text-sm text-base-content/70">
+											Personal perspectives on emerging technologies,
+											development experiences, AI innovations, and industry
+											trends that shape the future of software development.
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="flex flex-wrap gap-2 mt-6">
+								<span class="badge badge-outline">Python</span>
+								<span class="badge badge-outline">FastAPI</span>
+								<span class="badge badge-outline">Django</span>
+								<span class="badge badge-outline">JavaScript</span>
+								<span class="badge badge-outline">React</span>
+								<span class="badge badge-outline">Next.js</span>
+								<span class="badge badge-outline">PostgreSQL</span>
+								<span class="badge badge-outline">Machine Learning</span>
+								<span class="badge badge-outline">Generative AI</span>
+								<span class="badge badge-outline">RAGs</span>
+								<span class="badge badge-outline">Agentic AI</span>
+								<span class="badge badge-outline"
+									>Containerization - Docker</span
+								>
+								<span class="badge badge-outline">ComfyUI</span>
+								<span class="badge badge-outline">LoRA Models</span>
+								<span class="badge badge-outline">Image Generation</span>
+							</div>
+							<div
+								class="flex flex-wrap justify-center md:justify-start gap-4 mt-6"
+							>
+								<a
+									href="/services"
+									class="btn btn-neutral"
+									>View Services & Pricing</a
+								>
+								<a
+									href="#contact"
+									class="btn btn-outline"
+									>Get Free Quote</a
+								>
+							</div>
+						</div>
+					</div>
+				</section>
 
-        <!-- Featured Posts Section -->
-        {
-          postsToDisplay.length > 0 && (
-            <section class="mb-12">
-              <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-semibold border-b border-base-300 pb-2 w-full">
-                  {featuredPosts.length > 0
-                    ? "Featured Articles"
-                    : "Latest Articles"}
-                </h2>
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {postsToDisplay.map((post) => (
-                  <PostCard
-                    post={post}
-                    defaultImage="/images/blog/thumbnail.png"
-                  />
-                ))}
-              </div>
-              <div class="flex justify-end mt-4">
-                <a href="/blog" class="btn btn-ghost btn-sm">
-                  View All Articles →
-                </a>
-              </div>
-            </section>
-          )
-        }
+				<!-- Featured Posts Section -->
+				{
+					postsToDisplay.length > 0 && (
+						<section class="mb-12">
+							<div class="flex justify-between items-center mb-6">
+								<h2 class="text-2xl font-semibold border-b border-base-300 pb-2 w-full">
+									{featuredPosts.length > 0
+										? "Featured Articles"
+										: "Latest Articles"}
+								</h2>
+							</div>
+							<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+								{postsToDisplay.map((post) => (
+									<PostCard
+										post={post}
+										defaultImage="/images/blog/thumbnail.png"
+									/>
+								))}
+							</div>
+							<div class="flex justify-end mt-4">
+								<a
+									href="/blog"
+									class="btn btn-ghost btn-sm"
+								>
+									View All Articles →
+								</a>
+							</div>
+						</section>
+					)
+				}
 
-        <!-- Key Topics Section -->
-        <section class="mb-12">
-          <h2 class="text-2xl font-semibold mb-6 border-b border-base-300 pb-2">
-            Key Topics
-          </h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="card bg-base-100 shadow-sm">
-              <div class="card-body">
-                <h3 class="card-title">Backend Development</h3>
-                <p>
-                  Optimize your API services with Python using FastAPI and
-                  Django, with practical examples focused on performance,
-                  security, and maintainability.
-                </p>
-              </div>
-            </div>
-            <div class="card bg-base-100 shadow-sm">
-              <div class="card-body">
-                <h3 class="card-title">Frontend Development</h3>
-                <p>
-                  Implement responsive and interactive user interfaces with
-                  step-by-step tutorials for React, Next.js, and modern CSS
-                  frameworks.
-                </p>
-              </div>
-            </div>
-            <div class="card bg-base-100 shadow-sm">
-              <div class="card-body">
-                <h3 class="card-title">AI & Machine Learning</h3>
-                <p>
-                  Apply machine learning models to real-world problems with
-                  practical implementations using Python, TensorFlow, and
-                  related technologies.
-                </p>
-              </div>
-            </div>
-            <div class="card bg-base-100 shadow-sm">
-              <div class="card-body">
-                <h3 class="card-title">DevOps & Cloud</h3>
-                <p>
-                  Set up efficient deployment workflows using Docker, CI/CD
-                  pipelines, and cloud services for scalable infrastructure.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+				<!-- Key Topics Section -->
+				<section class="mb-12">
+					<h2 class="text-2xl font-semibold mb-6 border-b border-base-300 pb-2">
+						Key Topics
+					</h2>
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+						<div class="card bg-base-100 shadow-sm">
+							<div class="card-body">
+								<h3 class="card-title">Backend Development</h3>
+								<p>
+									Optimize your API services with Python using FastAPI and
+									Django, with practical examples focused on performance,
+									security, and maintainability.
+								</p>
+							</div>
+						</div>
+						<div class="card bg-base-100 shadow-sm">
+							<div class="card-body">
+								<h3 class="card-title">Frontend Development</h3>
+								<p>
+									Implement responsive and interactive user interfaces with
+									step-by-step tutorials for React, Next.js, and modern CSS
+									frameworks.
+								</p>
+							</div>
+						</div>
+						<div class="card bg-base-100 shadow-sm">
+							<div class="card-body">
+								<h3 class="card-title">AI & Machine Learning</h3>
+								<p>
+									Apply machine learning models to real-world problems with
+									practical implementations using Python, TensorFlow, and
+									related technologies.
+								</p>
+							</div>
+						</div>
+						<div class="card bg-base-100 shadow-sm">
+							<div class="card-body">
+								<h3 class="card-title">DevOps & Cloud</h3>
+								<p>
+									Set up efficient deployment workflows using Docker, CI/CD
+									pipelines, and cloud services for scalable infrastructure.
+								</p>
+							</div>
+						</div>
+					</div>
+				</section>
 
-        <!-- Resources Section
+				<!-- Resources Section
 				{guides.length > 0 && (
 					<section class="mb-12">
 						<h2 class="text-2xl font-semibold mb-6 border-b border-base-300 pb-2">Technical Guides</h2>
@@ -208,162 +221,67 @@ const PERSONAL_TITLE = "Amal Babu · ABK Datalab - Freelance Web Developer";
 					</section>
 				)} -->
 
-        <!-- Subscribe Section -->
-        <EmailSubscribe />
+				<!-- Subscribe Section -->
+				<EmailSubscribe />
 
-        <!-- Contact Section -->
-        <section class="mt-12 card bg-primary/5 shadow-lg" id="contact">
-          <div class="card-body p-8">
-            <div class="text-center mb-8">
-              <h2 class="text-3xl font-bold mb-4">
-                Ready to Start Your Project?
-              </h2>
-              <p class="text-lg text-base-content/80 max-w-2xl mx-auto">
-                Get a free consultation and quote for your website development
-                needs. Let's discuss how I can help your business succeed
-                online.
-              </p>
-            </div>
+				<!-- Contact Section -->
+				<CTASection />
 
-            <div
-              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
-            >
-              <div class="text-center">
-                <div class="text-primary text-4xl mb-2">
-                  <svg
-                    class="w-12 h-12 mx-auto"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
-                    ></path>
-                    <path
-                      d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
-                    ></path>
-                  </svg>
-                </div>
-                <h3 class="font-semibold mb-1">Email</h3>
-                <a
-                  href="mailto:developer.amalbabu@gmail.com"
-                  class="text-primary hover:underline"
-                >
-                  developer.amalbabu@gmail.com
-                </a>
-              </div>
-              <div class="text-center">
-                <div class="text-primary text-4xl mb-2">
-                  <svg
-                    class="w-12 h-12 mx-auto"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"
-                    ></path>
-                  </svg>
-                </div>
-                <h3 class="font-semibold mb-1">Phone</h3>
-                <a
-                  href="tel:+919074631926"
-                  class="text-primary hover:underline"
-                >
-                  (+91) 9074631926
-                </a>
-              </div>
-              <div class="text-center">
-                <div class="text-primary text-4xl mb-2">
-                  <svg
-                    class="w-12 h-12 mx-auto"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.56-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.56.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.498-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z"
-                      clip-rule="evenodd"></path>
-                  </svg>
-                </div>
-                <h3 class="font-semibold mb-1">Website</h3>
-                <p class="text-base-content/80">amal-babu-git.github.io</p>
-              </div>
-            </div>
-
-            <div class="bg-base-100 rounded-lg p-6">
-              <h3 class="font-semibold text-lg mb-4 text-center">
-                Simple Payment Structure
-              </h3>
-              <div
-                class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md mx-auto"
-              >
-                <div class="text-center">
-                  <p class="text-2xl font-bold text-primary">40%</p>
-                  <p class="text-sm">Advance Payment<br />(Project Start)</p>
-                </div>
-                <div class="text-center">
-                  <p class="text-2xl font-bold text-primary">60%</p>
-                  <p class="text-sm">Final Payment<br />(On Completion)</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Connect Section -->
-        <section class="mt-12 card bg-base-100 shadow-sm">
-          <div class="card-body p-6">
-            <div class="flex justify-center items-center flex-col text-center">
-              <h2 class="text-xl font-semibold mb-3">
-                Let's Build Something Great Together
-              </h2>
-              <p class="mb-4 max-w-md">
-                Ready to transform your business with a professional website?
-                Let's discuss your project requirements and create a solution
-                that works for you.
-              </p>
-              <div class="flex gap-3">
-                <a
-                  href="https://github.com/amal-babu-git"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn btn-sm btn-outline"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    class="fill-current mr-1"
-                    ><path
-                      d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-                    ></path></svg
-                  >
-                  Portfolio
-                </a>
-                <a
-                  href="mailto:developer.amalbabu@gmail.com?subject=Website Development Inquiry"
-                  class="btn btn-sm btn-primary"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    viewBox="0 0 16 16"
-                    class="mr-1"
-                  >
-                    <path
-                      d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"
-                    ></path>
-                  </svg>
-                  Get Quote
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
-    <Footer />
-  </body>
+				<!-- Connect Section -->
+				<section class="mt-12 card bg-base-100 shadow-sm">
+					<div class="card-body p-6">
+						<div class="flex justify-center items-center flex-col text-center">
+							<h2 class="text-xl font-semibold mb-3">
+								Let's Build Something Great Together
+							</h2>
+							<p class="mb-4 max-w-md">
+								Ready to transform your business with a professional website?
+								Let's discuss your project requirements and create a solution
+								that works for you.
+							</p>
+							<div class="flex gap-3">
+								<a
+									href="https://github.com/amal-babu-git"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="btn btn-sm btn-outline"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										class="fill-current mr-1"
+										><path
+											d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+										></path></svg
+									>
+									Portfolio
+								</a>
+								<a
+									href="mailto:developer.amalbabu@gmail.com?subject=Website Development Inquiry"
+									class="btn btn-sm btn-primary"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										fill="currentColor"
+										viewBox="0 0 16 16"
+										class="mr-1"
+									>
+										<path
+											d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"
+										></path>
+									</svg>
+									Get Quote
+								</a>
+							</div>
+						</div>
+					</div>
+				</section>
+			</main>
+		</div>
+		<Footer />
+	</body>
 </html>
