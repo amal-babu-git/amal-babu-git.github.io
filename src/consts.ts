@@ -3,11 +3,11 @@
 
 export const SITE_TITLE = "Amal Babu · ABK DataLab";
 export const SITE_DESCRIPTION =
-	"Amal Babu - Freelance Web Developer specializing in modern website development services. Expert in Next.js, TypeScript, React, Python, FastAPI, Machine Learning, and AI technologies. Professional web development with comprehensive support and maintenance.";
+	"Amal Babu - Software Engineer developing scalable software to solve business problems. Expert in Next.js, TypeScript, React, Python, FastAPI, Machine Learning, and AI tech. Tech writer and open-source contributor.";
 export const SITE_URL = "https://amal-babu-git.github.io"; // Replace with your actual domain
 export const AUTHOR = "Amal Babu";
 export const KEYWORDS =
-	"Freelance Web Developer, Website Development Services, Amal Babu, ABK DataLab, Full-Stack Developer, Next.js Expert, TypeScript Development, React Developer, Python Developer, FastAPI, Django, Machine Learning Engineer, AI Developer, Gen AI Developer, JavaScript Developer, Web Development, API Development, Artificial Intelligence, ComfyUI, LoRA Models, Professional Web Services, Custom Website Development";
+	"Software Engineer, Tech Writer, Amal Babu, ABK DataLab, Full-Stack Developer, Next.js Expert, TypeScript Development, React Developer, Python Developer, FastAPI, Machine Learning Engineer, AI Developer, Gen AI Developer, Systems Architecture, API Development, Artificial Intelligence, ComfyUI, Open Source";
 export const SOCIAL_LINKS = {
 	github: "https://github.com/amal-babu-git",
 	linkedin: "https://www.linkedin.com/in/amalbabudev",
