@@ -3,7 +3,7 @@ title: 'AI Character Creation & Monetization Plan - Version 1.0.0'
 description: 'This comprehensive guide outlines the step-by-step process to create, develop, and monetize an AI-generated character for content creation and business purposes.'
 pubDate: 'May 28 2025'
 heroImage: 'https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/d674137f-de0d-4e81-bc05-adf9436389e2/original=true,quality=90/ComfyUI_temp_pzdiz_00224_.jpeg'
-featured: true
+featured: false
 ---
 # AI Character Creation & Monetization Plan
 **Professional Business Plan Document**
