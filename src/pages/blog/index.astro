@@ -11,7 +11,7 @@ const BLOG_TITLE = "Blog | Amal Babu · ABK Datalab";
 
 // Get all blog posts sorted by date
 const allPosts = (await getCollection("blog")).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
 // Get featured posts
@@ -26,7 +26,7 @@ const subcategories = [
 				const pathParts = post.id.split("/");
 				return pathParts.length > 1 ? pathParts[0] : null;
 			})
-			.filter(Boolean) // Remove null values
+			.filter(Boolean), // Remove null values
 	),
 ] as string[];
 
@@ -59,10 +59,12 @@ const defaultImg = "/thumbnail.png"; // Default thumbnail path
 		<main class="container mx-auto px-4 py-12 max-w-5xl">
 			<!-- Blog Header -->
 			<div class="text-center mb-12">
-				<h2 class="text-3xl font-semibold mb-2">Technical Insights & Guides</h2>
+				<h2 class="text-3xl font-semibold mb-2">
+					Technical Insights & Guides
+				</h2>
 				<p class="text-lg text-base-content/70 max-w-2xl mx-auto">
-					Practical solutions, implementation guides, and technical deep dives
-					for modern developers
+					Practical solutions, implementation guides, and technical
+					deep dives for modern developers
 				</p>
 			</div>
 
@@ -80,12 +82,15 @@ const defaultImg = "/thumbnail.png"; // Default thumbnail path
 									<a
 										href="/blog"
 										class="font-semibold"
-										>All Topics</a>
+										>All Topics</a
+									>
 								</li>
 								{
 									subcategories.map((subcategory) => (
 										<li>
-											<a href={`/blog/category/${subcategory}`}>
+											<a
+												href={`/blog/category/${subcategory}`}
+											>
 												{formatSubcategory(subcategory)}
 											</a>
 										</li>

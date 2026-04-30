@@ -5,31 +5,34 @@ import ProfileDock from "../components/profile/ProfileDock.astro";
 
 <Layout
 	title="Amal Babu"
-	description="Amal Babu is a Software Engineer specializing in Full-Stack development and AI integration — building custom CRMs for Healthcare, Construction, and E-commerce, developing AI agents with Pydantic AI and LangGraph, and architecting scalable software systems."
+	description="Amal Babu is a Software Engineer specializing in Full-Stack development and AI integration — building CRM, ERP, and domain-specific business systems for Healthcare, Construction, and E-commerce, developing AI agents with Pydantic AI and LangGraph, and architecting scalable software systems."
 >
 	<!-- Enhanced Professional Profile Section -->
 	<div class="mb-8">
 		<h2 class="text-xl mb-4 text-base-content/70 text-center">
-			Software Engineer — Full-Stack & AI Development
+			Software Engineer — Full-Stack, CRM/ERP & Agentic Engineering
 		</h2>
 
 		<div class="alert bg-base-200 mb-6">
 			<p class="text-base-content/90">
 				I'm a <strong>software engineer</strong> focused on building full-stack applications
 				and integrating AI into real-world business software. I specialize in developing
-				<strong>custom CRMs</strong> with domain-specific requirements across <strong
-					>Healthcare</strong
-				>, <strong>Construction</strong>, and <strong>E-commerce</strong> industries
-				— handling everything from requirements gathering to system architecture and
-				delivery.
+				<strong>custom CRM and ERP systems</strong> with domain-specific workflows across
+				<strong>Healthcare</strong>, <strong>Construction</strong>, and <strong
+					>E-commerce</strong
+				> industries, including modules for accounting, HR, hospital management,
+				pharmacy, and inventory management. I handle everything from
+				requirements gathering to system architecture and delivery.
 				<br /><br />
 				On the AI side, I build <strong>AI agents</strong> and intelligent automation
 				using tools like <strong>Pydantic AI</strong> and
 				<strong>LangGraph</strong>, and integrate AI capabilities directly into
-				business software to make them smarter and more efficient. I leverage
-				AI-assisted development tools — <strong>GitHub Copilot</strong>,
-				<strong>Claude Code</strong>, and <strong>OpenAI Codex</strong> — to ship
-				high-quality software faster.
+				business software to make them smarter and more efficient. I also apply
+				<strong>agentic engineering</strong> as a coding practice — using AI
+				tools (<strong>GitHub Copilot</strong>, <strong>Claude Code</strong>,
+				<strong>OpenAI Codex</strong>) with engineering judgment and human
+				oversight to ship high-quality software faster, without compromising
+				code quality.
 				<br /><br />
 				My stack spans <strong>Python</strong>, <strong>FastAPI</strong>,
 				<strong>Django</strong>, <strong>React</strong>, and <strong
@@ -43,27 +46,27 @@ import ProfileDock from "../components/profile/ProfileDock.astro";
 		<!-- Key Strengths -->
 		<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
 			<div class="bg-base-200 rounded-lg p-4 text-center">
-				<div class="font-bold text-sm mb-1">Custom CRM Development</div>
+				<div class="font-bold text-sm mb-1">ERP & CRM Development</div>
 				<div class="text-xs text-base-content/60">
 					Healthcare · Construction · E-commerce
 				</div>
 			</div>
 			<div class="bg-base-200 rounded-lg p-4 text-center">
-				<div class="font-bold text-sm mb-1">AI Integration & Agents</div>
+				<div class="font-bold text-sm mb-1">AI Agents & Integration</div>
 				<div class="text-xs text-base-content/60">
 					Pydantic AI · LangGraph · RAG
 				</div>
 			</div>
 			<div class="bg-base-200 rounded-lg p-4 text-center">
-				<div class="font-bold text-sm mb-1">System Architecture</div>
+				<div class="font-bold text-sm mb-1">Agentic Engineering</div>
 				<div class="text-xs text-base-content/60">
-					Design & technical decision-making
+					Copilot · Claude Code · Codex
 				</div>
 			</div>
 			<div class="bg-base-200 rounded-lg p-4 text-center">
-				<div class="font-bold text-sm mb-1">AI-Augmented Development</div>
+				<div class="font-bold text-sm mb-1">Architecture & Delivery</div>
 				<div class="text-xs text-base-content/60">
-					Copilot · Claude Code · Codex
+					System design · Team leadership
 				</div>
 			</div>
 		</div>
@@ -220,6 +223,26 @@ import ProfileDock from "../components/profile/ProfileDock.astro";
 
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 			<div>
+				<h3 class="font-semibold mb-2">Industry Domains</h3>
+				<div class="flex flex-wrap gap-2">
+					<span class="badge badge-ghost">Healthcare</span>
+					<span class="badge badge-ghost">Construction</span>
+					<span class="badge badge-ghost">E-commerce</span>
+				</div>
+			</div>
+
+			<div>
+				<h3 class="font-semibold mb-2">ERP & CRM Modules</h3>
+				<div class="flex flex-wrap gap-2">
+					<span class="badge badge-ghost">Accounting</span>
+					<span class="badge badge-ghost">HR Management</span>
+					<span class="badge badge-ghost">Hospital Management</span>
+					<span class="badge badge-ghost">Pharmacy</span>
+					<span class="badge badge-ghost">Inventory Management</span>
+				</div>
+			</div>
+
+			<div>
 				<h3 class="font-semibold mb-2">Database Technologies</h3>
 				<div class="flex flex-wrap gap-2">
 					<span class="badge badge-ghost">PostgreSQL</span>
@@ -271,8 +294,10 @@ import ProfileDock from "../components/profile/ProfileDock.astro";
 			</div>
 
 			<div>
-				<h3 class="font-semibold mb-2">AI Development Tools</h3>
+				<h3 class="font-semibold mb-2">Agentic Engineering</h3>
 				<div class="flex flex-wrap gap-2">
+					<span class="badge badge-ghost">Agentic Engineering</span>
+					<span class="badge badge-ghost">Agentic Coding</span>
 					<span class="badge badge-ghost">GitHub Copilot</span>
 					<span class="badge badge-ghost">Claude Code</span>
 					<span class="badge badge-ghost">OpenAI Codex</span>
@@ -312,14 +337,14 @@ import ProfileDock from "../components/profile/ProfileDock.astro";
 				</div>
 				<ul class="list-disc ml-5">
 					<li>
-						Developed custom CRMs for <strong>Healthcare</strong>, <strong
+						Developed CRM and ERP modules for <strong>Healthcare</strong>, <strong
 							>Construction</strong
-						>, and <strong>E-commerce</strong> industries with domain-specific requirements
-						and workflows.
+						>, and <strong>E-commerce</strong> projects, covering accounting, HR,
+						hospital management, pharmacy, and inventory workflows.
 					</li>
 					<li>
 						Integrated AI capabilities into business software, building
-						intelligent features and automation into CRM and web applications.
+						intelligent features and automation into CRM, ERP, and web applications.
 					</li>
 					<li>
 						Involved in system architecture and technical design decisions
@@ -330,8 +355,9 @@ import ProfileDock from "../components/profile/ProfileDock.astro";
 						maintaining code quality.
 					</li>
 					<li>
-						Leveraged AI development tools (GitHub Copilot, Claude Code) to
-						accelerate development and improve output quality.
+						Applied <strong>agentic engineering</strong> as a coding practice —
+						using AI tools (GitHub Copilot, Claude Code) with engineering
+						judgment and human oversight to accelerate delivery.
 					</li>
 					<li>
 						Technologies/Stack used: Next.js, React.js, Astro.js, Django, DRF,
@@ -532,6 +558,32 @@ import ProfileDock from "../components/profile/ProfileDock.astro";
 		</h2>
 
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+			<div class="bg-base-200 p-6 rounded-lg">
+				<h3 class="font-bold text-lg flex items-center gap-2 mb-3">
+					FastAPI Backend Template
+					<div class="badge badge-ghost">Python</div>
+				</h3>
+				<ul class="list-disc ml-5 mb-2">
+					<li>
+						A production-ready, reusable FastAPI backend template developed for Hybrid Interactive consultancy as an open-source official template
+					</li>
+					<li>
+						Used as the base generic version for many ERP and CRM backend developments
+					</li>
+					<li>
+						Features: FastAPI + SQLAlchemy 2.0 async ORM, JWT auth with RBAC, Celery background tasks, and Docker support
+					</li>
+				</ul>
+				<div class="flex justify-end mt-4">
+					<a
+						href="https://github.com/hybridinteract/fastapi-template"
+						target="_blank"
+						class="btn btn-sm btn-outline"
+						>View Project</a
+					>
+				</div>
+			</div>
+
 			<div class="bg-base-200 p-6 rounded-lg">
 				<h3 class="font-bold text-lg flex items-center gap-2 mb-3">
 					FastAPI Admin CLI
