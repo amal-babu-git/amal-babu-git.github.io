@@ -14,6 +14,8 @@ To solve this, engineering teams must adopt **firm architecture standards and pr
 
 In this post, I will share the system architecture approach and project structure philosophy I follow when building scalable, maintainable software systems—specifically focusing on a **Modular Monolith** architecture powered by **FastAPI**. In fact, I've open-sourced my exact starting environment, which you can check out on GitHub here: [FastAPI Backend Template by Hybrid Interactive](https://github.com/hybridinteract/fastapi-template).
 
+For the reasons behind this structure and what it costs, independent of FastAPI, see [Structure First: How I Design Business Software](/blog/coding-and-development/structure-first-business-software/).
+
 ---
 
 ## A Real-World Cautionary Tale

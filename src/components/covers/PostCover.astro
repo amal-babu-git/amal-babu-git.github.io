@@ -1,0 +1,622 @@
+---
+// Line-drawn covers, in the same ink style as the homepage diagram.
+// Each one draws the example the post works through.
+
+interface Props {
+	id: string;
+	title: string;
+}
+
+const { id, title } = Astro.props;
+
+const arrowUp = (x: number, y: number) => `M${x - 4} ${y + 6} L${x} ${y} L${x + 4} ${y + 6}`;
+const arrowDown = (x: number, y: number) => `M${x - 4} ${y - 6} L${x} ${y} L${x + 4} ${y - 6}`;
+const arrowRight = (x: number, y: number) => `M${x - 6} ${y - 4} L${x} ${y} L${x - 6} ${y + 4}`;
+
+// Binary tree example: preorder [3, 9, 20, 15, 7], inorder [9, 3, 15, 20, 7]
+const preorder = [3, 9, 20, 15, 7];
+const inorder = [9, 3, 15, 20, 7];
+const treeNodes = [
+	{ v: 3, x: 276, y: 40, root: true },
+	{ v: 9, x: 234, y: 92 },
+	{ v: 20, x: 318, y: 92 },
+	{ v: 15, x: 292, y: 144 },
+	{ v: 7, x: 344, y: 144 },
+];
+const treeEdges = [
+	[276, 40, 234, 92],
+	[276, 40, 318, 92],
+	[318, 92, 292, 144],
+	[318, 92, 344, 144],
+];
+
+// Sliding window example: s = "abcabcbb", longest window "abc"
+const chars = "abcabcbb".split("");
+
+// Two pointers example: nums = [1, 1, 1, 2, 2, 3], k = 2
+const nums = [1, 1, 1, 2, 2, 3];
+const cellX = (i: number) => 66 + i * 38;
+
+// Structure first: each layer depends toward the domain, never away from it.
+const layers = [
+	{ label: "routes", note: "HTTP", x: 20 },
+	{ label: "services", note: "use cases", x: 136 },
+	{ label: "domain", note: "rules", x: 252, accent: true },
+];
+---
+
+<svg
+	class="cover"
+	viewBox="0 0 360 180"
+	preserveAspectRatio="xMidYMid meet"
+	role="img"
+	aria-label={`Drawing for ${title}`}
+>
+	{
+		id === "coding-and-development/construct-binary-tree-from-preorder-and-inorder-traversal" && (
+			<g>
+				<text
+					class="mu"
+					x="20"
+					y="36"
+				>
+					preorder
+				</text>
+				{preorder.map((v, i) => (
+					<g>
+						<rect
+							class:list={["bx", { "ac-bx": i === 0 }]}
+							x={20 + i * 26}
+							y="44"
+							width="26"
+							height="24"
+						/>
+						<text
+							class:list={["tx", { "ac-tx": i === 0 }]}
+							x={33 + i * 26}
+							y="61"
+							text-anchor="middle"
+						>
+							{v}
+						</text>
+					</g>
+				))}
+				<text
+					class="mu"
+					x="20"
+					y="98"
+				>
+					inorder
+				</text>
+				{inorder.map((v, i) => (
+					<g>
+						<rect
+							class:list={["bx", { "ac-bx": i === 1 }]}
+							x={20 + i * 26}
+							y="106"
+							width="26"
+							height="24"
+						/>
+						<text
+							class:list={["tx", { "ac-tx": i === 1 }]}
+							x={33 + i * 26}
+							y="123"
+							text-anchor="middle"
+						>
+							{v}
+						</text>
+					</g>
+				))}
+				<path
+					class="ln"
+					d="M22 136 V142 H44 V136"
+				/>
+				<text
+					class="mu"
+					x="33"
+					y="158"
+					text-anchor="middle"
+				>
+					left
+				</text>
+				<path
+					class="ln"
+					d="M74 136 V142 H148 V136"
+				/>
+				<text
+					class="mu"
+					x="111"
+					y="158"
+					text-anchor="middle"
+				>
+					right
+				</text>
+
+				{treeEdges.map(([x1, y1, x2, y2]) => (
+					<line
+						class="ln"
+						x1={x1}
+						y1={y1}
+						x2={x2}
+						y2={y2}
+					/>
+				))}
+				{treeNodes.map((node) => (
+					<g>
+						<circle
+							class:list={["bx", { "ac-bx": node.root }]}
+							cx={node.x}
+							cy={node.y}
+							r="14"
+						/>
+						<text
+							class:list={["tx", { "ac-tx": node.root }]}
+							x={node.x}
+							y={node.y + 4.5}
+							text-anchor="middle"
+						>
+							{node.v}
+						</text>
+					</g>
+				))}
+			</g>
+		)
+	}
+
+	{
+		id === "coding-and-development/how-this-sliding-window-problem-changed-my-approach-to-problem-solving" && (
+			<g>
+				<text
+					class="mu"
+					x="44"
+					y="34"
+				>
+					s = "abcabcbb"
+				</text>
+				<rect
+					class="ac-bx"
+					x="40"
+					y="68"
+					width="110"
+					height="42"
+					rx="4"
+				/>
+				<text
+					class="tx ac-tx"
+					x="95"
+					y="60"
+					text-anchor="middle"
+				>
+					length 3
+				</text>
+				{chars.map((c, i) => (
+					<g>
+						<rect
+							class="bx"
+							x={44 + i * 34}
+							y="72"
+							width="34"
+							height="34"
+						/>
+						<text
+							class="tx"
+							x={61 + i * 34}
+							y="94"
+							text-anchor="middle"
+						>
+							{c}
+						</text>
+					</g>
+				))}
+				<path
+					class="ln"
+					d={`M61 140 V116 ${arrowUp(61, 116)}`}
+				/>
+				<text
+					class="mu"
+					x="61"
+					y="156"
+					text-anchor="middle"
+				>
+					left
+				</text>
+				<path
+					class="ln"
+					d={`M129 140 V116 ${arrowUp(129, 116)}`}
+				/>
+				<text
+					class="mu"
+					x="129"
+					y="156"
+					text-anchor="middle"
+				>
+					right
+				</text>
+			</g>
+		)
+	}
+
+	{
+		id === "coding-and-development/understanding-the-generalized-two-pointer-approach-for-removing-duplicates" && (
+			<g>
+				<text
+					class="mu"
+					x="294"
+					y="30"
+					text-anchor="end"
+				>
+					k = 2
+				</text>
+				<path
+					class="ln ac-ln dash"
+					d="M85 70 C85 38, 199 38, 199 70"
+				/>
+				<text
+					class="tx ac-tx"
+					x="142"
+					y="36"
+					text-anchor="middle"
+				>
+					compare
+				</text>
+				{nums.map((v, i) => (
+					<g>
+						<rect
+							class:list={["bx", { "ac-bx": i === 0 || i === 3 }]}
+							x={cellX(i)}
+							y="74"
+							width="38"
+							height="34"
+						/>
+						<text
+							class:list={["tx", { "ac-tx": i === 0 || i === 3 }]}
+							x={cellX(i) + 19}
+							y="96"
+							text-anchor="middle"
+						>
+							{v}
+						</text>
+					</g>
+				))}
+				{[
+					{ label: "l − k", i: 0 },
+					{ label: "l", i: 2 },
+					{ label: "r", i: 3 },
+				].map((pointer) => (
+					<g>
+						<path
+							class="ln"
+							d={`M${cellX(pointer.i) + 19} 138 V116 ${arrowUp(cellX(pointer.i) + 19, 116)}`}
+						/>
+						<text
+							class="mu"
+							x={cellX(pointer.i) + 19}
+							y="154"
+							text-anchor="middle"
+						>
+							{pointer.label}
+						</text>
+					</g>
+				))}
+			</g>
+		)
+	}
+
+	{
+		id === "coding-and-development/building-scalable-modular-monoliths-fastapi" && (
+			<g>
+				<rect
+					class="bx"
+					x="130"
+					y="12"
+					width="100"
+					height="28"
+				/>
+				<text
+					class="tx"
+					x="180"
+					y="31"
+					text-anchor="middle"
+				>
+					apis/v1.py
+				</text>
+				<path
+					class="ln"
+					d={`M180 40 V56 H74 V72 ${arrowDown(74, 72)}`}
+				/>
+				<path
+					class="ln"
+					d={`M180 40 V72 ${arrowDown(180, 72)}`}
+				/>
+				<path
+					class="ln"
+					d={`M180 40 V56 H286 V72 ${arrowDown(286, 72)}`}
+				/>
+				{[
+					{ label: "user/", x: 28 },
+					{ label: "activity/", x: 134 },
+					{ label: "orders/", x: 240, accent: true },
+				].map((mod) => (
+					<g>
+						<rect
+							class:list={["bx", { "ac-bx": mod.accent }]}
+							x={mod.x}
+							y="72"
+							width="92"
+							height="34"
+						/>
+						<text
+							class:list={["tx", { "ac-tx": mod.accent }]}
+							x={mod.x + 46}
+							y="94"
+							text-anchor="middle"
+						>
+							{mod.label}
+						</text>
+						<path
+							class="ln"
+							d={`M${mod.x + 46} 106 V136 ${arrowDown(mod.x + 46, 136)}`}
+						/>
+					</g>
+				))}
+				<rect
+					class="bx"
+					x="28"
+					y="136"
+					width="304"
+					height="30"
+				/>
+				<text
+					class="tx"
+					x="180"
+					y="156"
+					text-anchor="middle"
+				>
+					core/
+					<tspan
+						class="mu"
+						dx="6"
+					>
+						shared infrastructure
+					</tspan>
+				</text>
+			</g>
+		)
+	}
+
+	{
+		id === "comfyui/faceswap-react-comfyui-guide" && (
+			<g>
+				<path
+					class="ln"
+					d="M114 50 C134 50, 130 80, 150 80"
+				/>
+				<path
+					class="ln"
+					d="M114 130 C134 130, 130 100, 150 100"
+				/>
+				<path
+					class="ln"
+					d="M250 90 H266"
+				/>
+				{[
+					{ title: "Load Image", sub: "target", x: 14, y: 28, w: 100, h: 44 },
+					{ title: "Load Image", sub: "source face", x: 14, y: 108, w: 100, h: 44 },
+					{ title: "Save Image", x: 266, y: 68, w: 88, h: 44 },
+				].map((node) => (
+					<g>
+						<rect
+							class="bx"
+							x={node.x}
+							y={node.y}
+							width={node.w}
+							height={node.h}
+							rx="3"
+						/>
+						<text
+							class="tx"
+							x={node.x + node.w / 2}
+							y={node.sub ? node.y + 19 : node.y + 27}
+							text-anchor="middle"
+						>
+							{node.title}
+						</text>
+						{node.sub && (
+							<text
+								class="mu"
+								x={node.x + node.w / 2}
+								y={node.y + 34}
+								text-anchor="middle"
+							>
+								{node.sub}
+							</text>
+						)}
+					</g>
+				))}
+				<rect
+					class="ac-bx"
+					x="150"
+					y="60"
+					width="100"
+					height="60"
+					rx="3"
+				/>
+				<text
+					class="tx ac-tx"
+					x="200"
+					y="86"
+					text-anchor="middle"
+				>
+					ReActor
+				</text>
+				<text
+					class="mu"
+					x="200"
+					y="102"
+					text-anchor="middle"
+				>
+					face swap
+				</text>
+				{[
+					[114, 50],
+					[114, 130],
+					[150, 80],
+					[150, 100],
+					[250, 90],
+					[266, 90],
+				].map(([cx, cy]) => (
+					<circle
+						class="port"
+						cx={cx}
+						cy={cy}
+						r="3"
+					/>
+				))}
+			</g>
+		)
+	}
+	{
+		id === "coding-and-development/structure-first-business-software" && (
+			<g>
+				{layers.map((layer) => (
+					<g>
+						<rect
+							class:list={["bx", { "ac-bx": layer.accent }]}
+							x={layer.x}
+							y="36"
+							width="88"
+							height="34"
+						/>
+						<text
+							class:list={["tx", { "ac-tx": layer.accent }]}
+							x={layer.x + 44}
+							y="58"
+							text-anchor="middle"
+						>
+							{layer.label}
+						</text>
+						<text
+							class="mu"
+							x={layer.accent ? layer.x + 52 : layer.x + 44}
+							y="90"
+							text-anchor={layer.accent ? "start" : "middle"}
+						>
+							{layer.note}
+						</text>
+					</g>
+				))}
+				<path
+					class="ln"
+					d={`M108 53 H136 ${arrowRight(136, 53)}`}
+				/>
+				<path
+					class="ln"
+					d={`M224 53 H252 ${arrowRight(252, 53)}`}
+				/>
+				<path
+					class="ln"
+					d={`M296 126 V70 ${arrowUp(296, 70)}`}
+				/>
+				<rect
+					class="bx"
+					x="252"
+					y="126"
+					width="88"
+					height="34"
+				/>
+				<text
+					class="tx"
+					x="296"
+					y="148"
+					text-anchor="middle"
+				>
+					data access
+				</text>
+				<text
+					class="mu"
+					x="240"
+					y="148"
+					text-anchor="end"
+				>
+					persistence
+				</text>
+				<text
+					class="mu"
+					x="20"
+					y="138"
+				>
+					dependencies point
+				</text>
+				<text
+					class="mu"
+					x="20"
+					y="154"
+				>
+					toward the domain
+				</text>
+			</g>
+		)
+	}
+</svg>
+
+<style>
+	.cover {
+		display: block;
+		width: 100%;
+		height: 100%;
+		background: var(--film);
+	}
+
+	.ln {
+		fill: none;
+		stroke: var(--ink);
+		stroke-width: 1.25;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.bx {
+		fill: var(--paper);
+		stroke: var(--ink);
+		stroke-width: 1.25;
+	}
+
+	.ac-bx {
+		fill: color-mix(in srgb, var(--prussian) 10%, var(--paper));
+		stroke: var(--prussian);
+		stroke-width: 1.5;
+	}
+
+	.ac-ln {
+		stroke: var(--prussian);
+	}
+
+	.dash {
+		stroke-dasharray: 4 4;
+	}
+
+	.port {
+		fill: var(--paper);
+		stroke: var(--ink);
+		stroke-width: 1.25;
+	}
+
+	.tx {
+		fill: var(--ink);
+		font-family: var(--font-text);
+		font-size: 13px;
+		font-weight: 500;
+	}
+
+	.ac-tx {
+		fill: var(--prussian);
+		font-weight: 600;
+	}
+
+	.mu {
+		fill: var(--graphite);
+		font-family: var(--font-text);
+		font-size: 12px;
+		font-weight: 400;
+	}
+</style>

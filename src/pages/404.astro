@@ -1,30 +1,41 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
+import PageLayout from "../layouts/PageLayout.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 ---
 
-<html lang="en">
-	<head>
-		<BaseHead
-			title={`404: Not Found | ${SITE_TITLE}`}
-			description={SITE_DESCRIPTION}
-		/>
-	</head>
-	<body>
-		<Header />
-		<main class="container mx-auto px-4 py-16 text-center">
-			<h1 class="text-4xl font-bold mb-4">404 - Page Not Found</h1>
-			<p class="text-lg mb-8">
-				The page you're looking for doesn't exist or has been moved.
-			</p>
-			<a
-				href="/"
-				class="btn btn-primary"
-				>Return to Home</a
-			>
-		</main>
-		<Footer />
-	</body>
-</html>
+<PageLayout
+	title={`404: Not Found | ${SITE_TITLE}`}
+	description={SITE_DESCRIPTION}
+>
+	<h1 class="page-title font-display">Page not found</h1>
+	<p class="page-lead">
+		Nothing is served at <code
+			class="missing-path"
+			data-missing-path>this address</code
+		>. It may have moved. Try the
+		<a
+			class="text-link"
+			href="/">homepage</a
+		> or the
+		<a
+			class="text-link"
+			href="/blog">writing</a
+		>.
+	</p>
+</PageLayout>
+
+<script>
+	const slot = document.querySelector("[data-missing-path]");
+	if (slot) slot.textContent = window.location.pathname;
+</script>
+
+<style>
+	.missing-path {
+		font-size: 0.85em;
+		padding: 0.1em 0.35em;
+		border: 1px solid var(--rule);
+		border-radius: 0.25rem;
+		background: var(--paper);
+		word-break: break-all;
+	}
+</style>

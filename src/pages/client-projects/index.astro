@@ -1,0 +1,79 @@
+---
+// Client projects: a short introduction, then the projects most recent first,
+// each with its domain, role, abstract and stack. Clients are confidential,
+// so projects are described, never named.
+import PaperLayout, { type ContentsItem } from "../../layouts/PaperLayout.astro";
+import ProjectEntry from "../../components/paper/ProjectEntry.astro";
+import { getCollection } from "astro:content";
+import { newestFirst } from "../../utils/projects";
+
+const projects = (await getCollection("projects")).sort(newestFirst);
+const domains = new Set(projects.map((project) => project.data.domain));
+
+const contents: ContentsItem[] = [
+	{ id: "introduction", label: "Introduction" },
+	{ id: "projects", label: "Projects" },
+];
+---
+
+<PaperLayout
+	title="Client projects"
+	description="Business systems Amal Babu has led at Hybrid Interactive, in healthcare, construction, influencer marketing and other domains."
+	contents={contents}
+>
+	<header
+		slot="front"
+		class="front"
+	>
+		<h1 class="paper-title font-display">Client projects</h1>
+		<p class="paper-subtitle">Business systems I've led at Hybrid Interactive</p>
+		<dl class="byline">
+			<div>
+				<dt>Projects</dt>
+				<dd>{projects.length}</dd>
+			</div>
+			<div>
+				<dt>Domains</dt>
+				<dd>{domains.size}</dd>
+			</div>
+			<div>
+				<dt>Clients</dt>
+				<dd>Names withheld</dd>
+			</div>
+		</dl>
+	</header>
+
+	<section
+		id="introduction"
+		class="abstract"
+	>
+		<p>
+			I worked as the technical lead and lead developer on most of these
+			projects, and each one taught me something new. I learn best through
+			hands-on experience and steady improvement.
+		</p>
+		<p>
+			The early projects had plenty of challenges. Once we solved a problem, we
+			made sure it wouldn't come back on the next project. That became our core
+			principle: fix it properly and carry the fix forward. With every project,
+			our base template and core technical modules became more stable and
+			mature, so each new build started from a stronger place than the last.
+		</p>
+		<p>
+			Beyond the technology, I enjoyed working across so many industries:
+			construction project management, hospital management, e-commerce, service
+			marketplaces and sales. Each one meant studying the business problems
+			closely and formulating the optimal solution through our software.
+		</p>
+		<p>
+			Each write-up below covers what the system does, the stack it runs on, and
+			some of the decisions behind its design. Client names are left out because
+			the work is confidential.
+		</p>
+	</section>
+
+	<section id="projects">
+		<h2 class="sec-title">Projects</h2>
+		{projects.map((project) => <ProjectEntry project={project} />)}
+	</section>
+</PaperLayout>
