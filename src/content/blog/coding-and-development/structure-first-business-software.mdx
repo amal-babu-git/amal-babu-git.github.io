@@ -1,0 +1,77 @@
+---
+title: 'Structure First: How I Design Business Software'
+description: 'Business software rarely gets hard because of one piece of code. It gets hard because of its size: many connected rules, relational data and requirements that keep changing. This article sets out the five principles I design by (separation of concerns, one dependency direction, modules by business capability, a frontend that mirrors the backend, and AI only where it does real work), the architecture they produce, and what that structure costs.'
+pubDate: 'October 10 2026'
+featured: true
+---
+
+import SystemDiagram from "../../../components/SystemDiagram.astro";
+
+Most of what I build is business software: the systems an organization runs its operations on, such as accounting, HR, inventory, hospital management and campaign management. This article is the approach behind all of it. The [FastAPI article](/blog/coding-and-development/building-scalable-modular-monoliths-fastapi/) shows how I implement it, with the exact backend and frontend layouts I use. This one explains the reasons and the trade-offs.
+
+## Why structure comes first
+
+The code in these systems is rarely hard on its own. They get difficult because of their size. There are many interconnected business rules, the data is relational, and requirements keep changing after launch. Whether a system like that stays easy to change depends mostly on its structure: where the module boundaries are, which way dependencies point, and whether the data model fits the domain.
+
+I've seen what happens otherwise. My team rebuilt an internal enterprise tool whose modules had coupled and whose data integrity had broken down. After six to seven months of work, the client and the agency had concluded it wasn't fixable. Neither the tools nor AI assistance caused the failure. The causes were a document store chosen for relational data, and nobody deciding early where the module boundaries should be. The full story is in the [FastAPI article](/blog/coding-and-development/building-scalable-modular-monoliths-fastapi/).
+
+## Five principles
+
+These five principles shape how I structure a system. Each one exists for a reason, and the reasons matter more than the rules.
+
+### Separation of concerns
+
+Each layer has one job. Routes handle HTTP, services orchestrate use cases, schemas and models hold domain rules, and data-access code owns persistence. A change to storage then doesn't ripple into the API, and business rules can be tested without a web server.
+
+### One dependency direction
+
+Dependencies point toward the domain, which stays independent of frameworks and infrastructure. Sessions, the current user and configuration are injected (`Depends()` in FastAPI) rather than imported, so they're easy to replace in tests.
+
+### Modules by business capability
+
+Code is grouped by what the business does, such as `orders/` or `inventory/`, not by technical layer. Each module owns its models, schemas, services and routes, and other modules go through its services, not its tables. The modules deploy together, which keeps the system simple to run and debug. This layout is usually called a modular monolith. Because the boundaries are already clean, a module can become its own service later if there's a concrete reason, such as independent scaling or a separate team.
+
+### The frontend mirrors the backend
+
+Frontend `features/` folders follow the same module boundaries, so a feature's code lives in the same place on both sides of the API.
+
+### AI where it's needed
+
+AI goes where it does real work, such as automating a manual step or answering questions over the business's own data. It isn't added as a feature for its own sake. Agents act through the same services and permission checks as any other client, so they can't bypass business rules.
+
+## Reference architecture
+
+Figure 1 shows the architecture these principles produce. Frontends talk to one API layer. Behind it, the backend is a single deployable divided into business modules ([§2.3](#modules-by-business-capability)), each with its own routes, services, schemas and models ([§2.1](#separation-of-concerns)). Modules share only core infrastructure: the database session, authentication, background jobs and caching. AI agents are called from the API and work through the same modules ([§2.5](#ai-where-its-needed)).
+
+<div class="figure">
+	<SystemDiagram
+		figureLabel="Figure 1."
+		caption="The reference architecture. Select a box to read what it is; the one marked with an arrow opens its code."
+	/>
+</div>
+
+<p class="tbl-caption"><strong>Table 1.</strong> The stack I use at each layer of Figure 1.</p>
+
+| Layer | Technologies |
+| --- | --- |
+| Frontends | Next.js, React, Astro, Tailwind CSS |
+| API layer | FastAPI, Django, Django REST Framework |
+| Business modules | Routes, services, Pydantic schemas, async SQLAlchemy 2.0 models |
+| Data | PostgreSQL with Alembic migrations, Redis for caching |
+| Background jobs | Celery on Redis, monitored with Flower |
+| AI agents | Pydantic AI, LangGraph, RAG pipelines |
+| Delivery | Docker on AWS, Microsoft Azure and DigitalOcean |
+
+## What this structure costs
+
+No structure is free. These are the costs I accept, and when I'd choose differently.
+
+- **More decisions up front.** Module boundaries have to be drawn before the first feature ships, and a boundary drawn in the wrong place is work to move later. I accept that cost because the alternative, no boundaries at all, is what made the rebuild in [§1](#why-structure-comes-first) necessary.
+- **More files per feature.** Each module has its own routes, services, schemas and models. For a small CRUD app or a prototype that's ceremony, and a flat structure is fine until the business rules start to connect.
+- **One deployable scales as one unit.** If one module needs far more capacity than the rest, the whole application scales with it. That's the concrete reason to extract that module into its own service, and clean boundaries ([§2.3](#modules-by-business-capability)) make the extraction straightforward.
+- **Boundaries hold by discipline, not by the network.** In one codebase, nothing physically stops a module from querying another module's tables. Keeping modules behind their services takes code review, and ideally an import rule checked in CI.
+- **A schema up front.** PostgreSQL asks for a schema and migrations before data goes in. For data that really is document-shaped, a document store can be the better fit. The mistake in [§1](#why-structure-comes-first) was using one for data that wasn't.
+
+## In practice
+
+The [FastAPI article](/blog/coding-and-development/building-scalable-modular-monoliths-fastapi/) gives the exact backend and frontend layouts I use, and the open-source [FastAPI backend template](https://github.com/hybridinteract/fastapi-template) is the starting point many of our backends begin from. The client systems I've led with this approach are on the [Client projects page](/client-projects).

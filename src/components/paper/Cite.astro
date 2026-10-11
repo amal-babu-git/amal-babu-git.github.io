@@ -1,0 +1,31 @@
+---
+// In-text citation: [1] or [4, 5, 6], each number linking to its reference.
+interface Props {
+	n: number | number[];
+}
+
+const numbers = (Array.isArray(Astro.props.n) ? Astro.props.n : [Astro.props.n]).filter(
+	(value) => value > 0,
+);
+---
+
+{/* prettier-ignore */}
+{numbers.length > 0 && <span class="cite">[{numbers.map((value, i) => <>{i > 0 && ", "}<a href={`#ref-${value}`} data-cite={value}>{value}</a></>)}]</span>}
+
+<style>
+	.cite {
+		color: var(--prussian);
+		font-variant-numeric: tabular-nums;
+		white-space: nowrap;
+	}
+
+	.cite a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.cite a:hover {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+</style>

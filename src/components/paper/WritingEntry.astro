@@ -1,0 +1,46 @@
+---
+// One article in a writing list: number (when the list is numbered), title,
+// date and reading time, abstract, and the drawing of its example in the margin.
+import type { CollectionEntry } from "astro:content";
+import PostCover from "../covers/PostCover.astro";
+import { hasCover } from "../covers/covers";
+import { fullDate, readingMinutes } from "../../utils/writing";
+
+interface Props {
+	post: CollectionEntry<"blog">;
+	n?: string;
+}
+
+const { post, n } = Astro.props;
+const href = `/blog/${post.id}/`;
+---
+
+<article class:list={["entry", { "entry-unnumbered": !n }]}>
+	<h3 class="entry-title">
+		{n && <span class="entry-n">{n}</span>}
+		<a href={href}>{post.data.title}</a>
+	</h3>
+	<p class="entry-meta">
+		<time datetime={post.data.pubDate.toISOString()}>{fullDate(post.data.pubDate)}</time>, {
+			readingMinutes(post)
+		} min read
+	</p>
+	<p class="entry-abstract">{post.data.description}</p>
+</article>
+{
+	hasCover(post.id) && (
+		<figure class="margin-figure entry-figure">
+			<a
+				class="margin-figure-frame"
+				href={href}
+				tabindex="-1"
+				aria-hidden="true"
+			>
+				<PostCover
+					id={post.id}
+					title={post.data.title}
+				/>
+			</a>
+		</figure>
+	)
+}

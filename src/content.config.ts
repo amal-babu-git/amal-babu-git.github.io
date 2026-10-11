@@ -14,6 +14,7 @@ const blog = defineCollection({
 		authors: z.array(z.string()).optional().default(["amal-babu-git"]),
 		heroImage: z.string().optional(),
 		subcategory: z.string().optional(),
+		// Listed in the homepage's Writing section (up to three, newest first).
 		featured: z.boolean().optional(),
 	}),
 });
@@ -35,4 +36,24 @@ const licenses = defineCollection({
 	}),
 });
 
-export const collections = { blog, licenses };
+const projects = defineCollection({
+	// Client projects. Clients are confidential: the title describes the system
+	// and never names the client or the product, and neither does the file name.
+	loader: glob({ base: "./src/content/projects", pattern: "**/*.md" }),
+	schema: z.object({
+		title: z.string(),
+		// One or two sentences; shown as the abstract and in the index.
+		description: z.string(),
+		domain: z.string(),
+		role: z.enum(["techLead", "techLeadCore"]),
+		year: z.number(),
+		// Higher is newer. Give a new project the next number.
+		order: z.number(),
+		stack: z.array(z.string()),
+		// For ERP and CRM systems: each module and what it covers. Shown as
+		// the first section of the project page.
+		modules: z.array(z.object({ name: z.string(), covers: z.string() })).optional(),
+	}),
+});
+
+export const collections = { blog, licenses, projects };

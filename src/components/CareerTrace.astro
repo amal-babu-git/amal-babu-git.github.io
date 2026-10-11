@@ -1,0 +1,250 @@
+---
+// Work history drawn like a trace waterfall: each role is a span on a
+// shared time axis, with its duration. Dates are inclusive months.
+
+type Span = {
+	role: string;
+	org: string;
+	start: [number, number]; // [year, month]
+	end: [number, number] | null; // null = current role
+};
+
+const spans: Span[] = [
+	{ role: "Full-stack developer and tech lead", org: "Hybrid Interactive", start: [2025, 5], end: null },
+	{ role: "Full-stack developer intern", org: "Easecase AI", start: [2023, 11], end: [2024, 6] },
+	{ role: "Cybersecurity intern", org: "Samagra Technologies", start: [2023, 12], end: [2024, 1] },
+];
+
+// Optional label, e.g. "Figure 3.", for pages that cite the trace.
+const { figureLabel } = Astro.props as { figureLabel?: string };
+
+const AXIS_START_YEAR = 2023;
+const now = new Date();
+const nowYear = now.getFullYear();
+const monthIndex = ([year, month]: [number, number]) =>
+	(year - AXIS_START_YEAR) * 12 + (month - 1);
+const nowIndex = monthIndex([nowYear, now.getMonth() + 1]);
+const totalMonths = (nowYear - AXIS_START_YEAR + 1) * 12;
+const pct = (months: number) => `${((months / totalMonths) * 100).toFixed(3)}%`;
+
+const years = Array.from({ length: nowYear - AXIS_START_YEAR + 1 }, (_, i) => AXIS_START_YEAR + i);
+
+const formatDuration = (months: number) => {
+	const y = Math.floor(months / 12);
+	const m = months % 12;
+	if (y === 0) return `${m} mo`;
+	return m === 0 ? `${y} yr` : `${y} yr ${m} mo`;
+};
+
+const rows = spans.map((span) => {
+	const startIdx = monthIndex(span.start);
+	const endIdx = span.end ? monthIndex(span.end) : nowIndex;
+	const months = endIdx - startIdx + 1;
+	const endFraction = (startIdx + months) / totalMonths;
+	return {
+		...span,
+		left: pct(startIdx),
+		width: pct(months),
+		end: pct(startIdx + months),
+		duration: formatDuration(months),
+		// Put the duration after the bar when there's room, otherwise before it.
+		labelBefore: endFraction > 0.8,
+		current: span.end === null,
+	};
+});
+
+const nowPosition = pct(nowIndex + 1);
+---
+
+<figure class="trace">
+	<div
+		class="trace-row trace-axis"
+		aria-hidden="true"
+	>
+		<span></span>
+		<div class="track">
+			{
+				years.map((year) => (
+					<span
+						class="tick-label"
+						style={`left: ${pct((year - AXIS_START_YEAR) * 12)}`}
+					>
+						{year}
+					</span>
+				))
+			}
+			<span
+				class="now-label"
+				style={`left: ${nowPosition}`}>now</span
+			>
+		</div>
+	</div>
+
+	{
+		rows.map((row) => (
+			<div class="trace-row">
+				<div class="span-name">
+					<span class="span-role">{row.role}</span>
+					<span class="span-org">{row.org}</span>
+				</div>
+				<div class="track">
+					{years.map((year) => (
+						<span
+							class="tick"
+							style={`left: ${pct((year - AXIS_START_YEAR) * 12)}`}
+							aria-hidden="true"
+						/>
+					))}
+					<span
+						class="now"
+						style={`left: ${nowPosition}`}
+						aria-hidden="true"
+					/>
+					<span
+						class:list={["bar", { "is-current": row.current }]}
+						style={`left: ${row.left}; width: ${row.width}`}
+						aria-hidden="true"
+					/>
+					<span
+						class:list={["duration", { before: row.labelBefore }]}
+						style={`left: ${row.labelBefore ? row.left : row.end}`}
+					>
+						{row.duration}
+					</span>
+				</div>
+			</div>
+		))
+	}
+
+	<figcaption class="trace-caption">
+		{figureLabel && <span class="figure-label">{figureLabel}</span>}
+		Roles as spans on one time axis, newest first. The blue span is my current
+		role; durations count whole months.
+	</figcaption>
+</figure>
+
+<style>
+	.trace {
+		margin: 0 0 3rem;
+	}
+
+	.trace-row {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		row-gap: 0.375rem;
+		padding-block: 0.625rem;
+	}
+
+	@media (min-width: 640px) {
+		.trace-row {
+			grid-template-columns: 12rem minmax(0, 1fr);
+			column-gap: 1.5rem;
+			align-items: center;
+		}
+	}
+
+	.trace-axis {
+		padding-block: 0 0.25rem;
+	}
+
+	@media (max-width: 639px) {
+		.trace-axis > span:first-child {
+			display: none;
+		}
+	}
+
+	.track {
+		position: relative;
+		height: 1.5rem;
+	}
+
+	.trace-axis .track {
+		height: 1.25rem;
+	}
+
+	.tick-label,
+	.now-label {
+		position: absolute;
+		bottom: 0;
+		font-size: 0.8125rem;
+		line-height: 1;
+		color: var(--graphite);
+		font-variant-numeric: tabular-nums;
+		padding-left: 0.25rem;
+	}
+
+	.now-label {
+		color: var(--prussian);
+		transform: translateX(-50%);
+		padding-left: 0;
+	}
+
+	.tick,
+	.now {
+		position: absolute;
+		top: -0.625rem;
+		bottom: -0.625rem;
+		width: 0;
+		border-left: 1px solid var(--rule);
+	}
+
+	.now {
+		border-left: 1px dashed var(--prussian);
+	}
+
+	.bar {
+		position: absolute;
+		top: 50%;
+		height: 0.625rem;
+		min-width: 3px;
+		transform: translateY(-50%);
+		border-radius: 1px;
+		background: color-mix(in srgb, var(--ink) 72%, transparent);
+	}
+
+	.bar.is-current {
+		background: var(--prussian);
+	}
+
+	.duration {
+		position: absolute;
+		top: 50%;
+		transform: translate(0.5rem, -50%);
+		font-size: 0.875rem;
+		color: var(--graphite);
+		white-space: nowrap;
+		font-variant-numeric: tabular-nums;
+		padding-inline: 0.25rem;
+		background: var(--film);
+	}
+
+	.duration.before {
+		transform: translate(calc(-100% - 0.5rem), -50%);
+	}
+
+	.span-role {
+		display: block;
+		font-size: 0.9375rem;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	.span-org {
+		display: block;
+		font-size: 0.875rem;
+		line-height: 1.3;
+		color: var(--graphite);
+	}
+
+	.figure-label {
+		color: var(--ink);
+		font-weight: 600;
+		margin-right: 0.25em;
+	}
+
+	.trace-caption {
+		margin-top: 0.75rem;
+		font-size: 0.875rem;
+		color: var(--graphite);
+	}
+</style>

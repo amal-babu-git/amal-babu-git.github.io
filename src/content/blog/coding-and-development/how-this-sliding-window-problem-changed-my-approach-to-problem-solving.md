@@ -3,7 +3,7 @@ title: 'How this Sliding Window Problem Changed My Approach to Problem Solving'
 description: 'Learning efficient problem-solving techniques through understanding the sliding window algorithm'
 pubDate: 'Nov 20 2024'
 heroImage: '/images/blog/dev/sliding-window.webp'
-featured: true
+featured: false
 authors: ['Amal Babu']
 ---
 

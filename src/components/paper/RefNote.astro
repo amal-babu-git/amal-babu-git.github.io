@@ -1,0 +1,64 @@
+---
+// Margin note for a cited reference: number, linked title, source.
+interface Props {
+	n: number;
+	reference?: {
+		title: string;
+		source: string;
+		url: string;
+		extra?: { name: string; url: string }[];
+	};
+}
+
+const { n, reference } = Astro.props;
+---
+
+{
+	reference && n > 0 && (
+		<p class="ref-note">
+			<span class="ref-note-n">[{n}]</span>
+			<a href={reference.url}>{reference.title}</a>
+			<span class="ref-note-source">{reference.source}</span>
+			{reference.extra?.map((link) => (
+				<a
+					class="ref-note-extra"
+					href={link.url}
+				>
+					{link.name}
+				</a>
+			))}
+		</p>
+	)
+}
+
+<style>
+	.ref-note {
+		margin: 0 0 0.75rem;
+	}
+
+	.ref-note-n {
+		color: var(--prussian);
+		font-variant-numeric: tabular-nums;
+		margin-right: 0.25rem;
+	}
+
+	.ref-note a {
+		color: var(--ink);
+		text-decoration: underline;
+		text-decoration-color: var(--rule);
+		text-underline-offset: 0.2em;
+	}
+
+	.ref-note a:hover {
+		text-decoration-color: currentColor;
+	}
+
+	.ref-note-source,
+	.ref-note-extra {
+		display: block;
+	}
+
+	.ref-note-source {
+		color: var(--graphite);
+	}
+</style>

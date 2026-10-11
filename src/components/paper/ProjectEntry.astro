@@ -1,0 +1,25 @@
+---
+// One project in the client projects index: title, domain, year and role,
+// abstract, and stack.
+import type { CollectionEntry } from "astro:content";
+import { PROJECT_PAGES, ROLES, projectHref } from "../../utils/projects";
+
+interface Props {
+	project: CollectionEntry<"projects">;
+}
+
+const { project } = Astro.props;
+const { title, description, domain, role, year, stack } = project.data;
+---
+
+<article
+	id={project.id}
+	class="entry project-entry"
+>
+	<h3 class="entry-title">
+		{PROJECT_PAGES ? <a href={projectHref(project)}>{title}</a> : title}
+	</h3>
+	<p class="entry-meta">{domain}, {year}. {ROLES[role].name}.</p>
+	<p class="entry-abstract">{description}</p>
+	<p class="entry-stack"><span class="muted">Stack</span> {stack.join(", ")}</p>
+</article>

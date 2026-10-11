@@ -6,7 +6,7 @@ import FormattedDate from "../../components/FormattedDate.astro";
 import { SITE_DESCRIPTION } from "../../consts";
 import { getCollection } from "astro:content";
 
-const LICENSES_TITLE = "Software Licenses | Amal Babu · ABK Datalab";
+const LICENSES_TITLE = "Software licenses";
 
 // Get all licenses sorted by effective date (most recent first)
 const allLicenses = (await getCollection("licenses")).sort(
@@ -38,7 +38,7 @@ const draftLicenses = allLicenses.filter(
 		<main class="container mx-auto px-4 py-8">
 			<div class="max-w-6xl mx-auto">
 				<div class="text-center mb-8">
-					<h1 class="text-4xl font-bold mb-4">Software Licenses</h1>
+					<h1 class="text-4xl font-bold mb-4 font-display">Software Licenses</h1>
 					<p class="text-lg text-base-content/70 max-w-2xl mx-auto">
 						Official software licenses governing the use, distribution, and
 						modification of software developed by Amal Babu.

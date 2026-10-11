@@ -1,0 +1,127 @@
+---
+// Shared shell for pages written as papers: a contents rail on the left,
+// the paper (main column + margin) on the right.
+import PageLayout from "./PageLayout.astro";
+import "../styles/paper.css";
+
+export type ContentsItem = {
+	id: string;
+	label: string;
+	n?: string;
+	depth?: 2 | 3;
+};
+
+interface Props {
+	title: string;
+	description: string;
+	contents: ContentsItem[];
+	image?: string;
+}
+
+const { title, description, contents, image } = Astro.props;
+---
+
+<PageLayout
+	title={title}
+	description={description}
+	image={image}
+>
+	<slot
+		name="head"
+		slot="head"
+	/>
+
+	<div class="paper-shell">
+		<nav
+			class="contents-rail"
+			aria-label="Contents"
+		>
+			<p class="rail-title">Contents</p>
+			<ol>
+				{
+					contents.map((item) => (
+						<li class={`depth-${item.depth ?? 2}`}>
+							<a
+								href={`#${item.id}`}
+								data-outline={item.id}
+							>
+								<span class="outline-n">{item.n}</span>
+								<span>{item.label}</span>
+							</a>
+						</li>
+					))
+				}
+			</ol>
+		</nav>
+
+		<article class="paper">
+			<slot name="front" />
+
+			<details class="toc-mobile">
+				<summary>Contents</summary>
+				<ol>
+					{
+						contents.map((item) => (
+							<li class={`depth-${item.depth ?? 2}`}>
+								<a href={`#${item.id}`}>
+									<span class="outline-n">{item.n}</span>
+									<span>{item.label}</span>
+								</a>
+							</li>
+						))
+					}
+				</ol>
+			</details>
+
+			<slot />
+		</article>
+	</div>
+</PageLayout>
+
+<script>
+	// Outline follows the reader: the current section is the last one whose
+	// top has passed 30% of the viewport.
+	const outlineLinks = [...document.querySelectorAll<HTMLAnchorElement>("[data-outline]")];
+	const outlineSections = outlineLinks
+		.map((link) => document.getElementById(link.dataset.outline ?? ""))
+		.filter((section): section is HTMLElement => section !== null);
+
+	let pending = false;
+	const markCurrent = () => {
+		pending = false;
+		const line = window.innerHeight * 0.3;
+		let current = outlineSections[0];
+		for (const section of outlineSections) {
+			if (section.getBoundingClientRect().top <= line) current = section;
+		}
+		for (const link of outlineLinks) {
+			if (link.dataset.outline === current?.id) link.setAttribute("aria-current", "true");
+			else link.removeAttribute("aria-current");
+		}
+	};
+
+	window.addEventListener(
+		"scroll",
+		() => {
+			if (pending) return;
+			pending = true;
+			requestAnimationFrame(markCurrent);
+		},
+		{ passive: true },
+	);
+	markCurrent();
+
+	// "Copy BibTeX" buttons: copy the entry next to them, and say so.
+	for (const button of document.querySelectorAll<HTMLButtonElement>("[data-copy-bibtex]")) {
+		const source = button.closest(".bibtex")?.querySelector("code")?.textContent ?? "";
+		button.addEventListener("click", async () => {
+			try {
+				await navigator.clipboard.writeText(source);
+				button.textContent = "Copied";
+			} catch {
+				button.textContent = "Select the text to copy";
+			}
+			setTimeout(() => (button.textContent = "Copy BibTeX"), 2000);
+		});
+	}
+</script>
