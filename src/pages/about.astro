@@ -13,7 +13,7 @@ const roles = [
 			"Build business software for clients in healthcare, construction, e-commerce and influencer marketing, including ERP and CRM modules for accounting, HR, hospital management, pharmacy and inventory.",
 			"Technical lead on each client project: lead the project and its system design, direct the team and make the key technical decisions.",
 			"Lead a small team of developers, coordinating delivery and keeping code quality high.",
-			"Built the company's open-source FastAPI backend template, the starting point for many of our backends.",
+			"Built the company's open-source FastAPI backend template, the starting point for many of our backends, and deployctl, the tool we deploy them with.",
 			"Integrate AI into business software where it does useful work, building agents and automation into ERP, CRM and web applications.",
 			"Practice agentic engineering: using GitHub Copilot and Claude Code with engineering judgment and human review to deliver faster.",
 		],
@@ -66,6 +66,33 @@ const education = [
 		school: "St. Philomena College",
 		year: "2022",
 		grade: "CGPA 8.34",
+	},
+];
+
+// Built as part of my degrees, not professional work; listed here only.
+const collegeProjects = [
+	{
+		name: "OnShop",
+		summary:
+			"An e-commerce site for a hypermarket with a payment gateway. Django and React, deployed on AWS EC2 with Docker.",
+		link: { name: "Demo", url: "https://onshopweb.web.app/" },
+	},
+	{
+		name: "Food donation system",
+		summary:
+			"Connects food donors with NGOs. Django REST Framework, React, Redux and Tailwind CSS.",
+		link: { name: "GitHub", url: "https://github.com/amal-babu-git/food-donation-system" },
+	},
+	{
+		name: "CGPA and SGPA calculator",
+		summary: "A grade calculator for VTU students, used by over 2,000 of them.",
+		link: { name: "Open it", url: "https://cgpa-sgpa.web.app/" },
+	},
+	{
+		name: "SkimLit",
+		summary:
+			"An NLP model that labels the sentences of medical abstracts as objectives, methods and conclusions, written up in IJRAR.",
+		link: { name: "Paper", url: "https://www.ijrar.org/papers/IJRAR1DUP049.pdf" },
 	},
 ];
 
@@ -261,15 +288,34 @@ const certifications = [
 			id="projects-heading"
 			class="band-name"
 		>
-			Projects
+			College projects
 		</h2>
-		<p>
-			My open-source tools, research and earlier projects are on the
-			<a
-				class="text-link"
-				href="/projects">Systems page</a
-			>.
-		</p>
+		<div>
+			<p class="muted college-note">
+				Built as part of my BCA and MCA degrees. My open-source tools are on the <a
+					class="text-link"
+					href="/projects">Systems page</a
+				>.
+			</p>
+			<ul class="plain-list">
+				{
+					collegeProjects.map((project) => (
+						<li>
+							<h3 class="item-title">{project.name}</h3>
+							<p class="muted">
+								{project.summary}{" "}
+								<a
+									class="text-link"
+									href={project.link.url}
+								>
+									{project.link.name}
+								</a>
+							</p>
+						</li>
+					))
+				}
+			</ul>
+		</div>
 	</section>
 
 	<section
@@ -445,6 +491,10 @@ const certifications = [
 		font-size: 1.0625rem;
 		font-weight: 600;
 		margin: 0;
+	}
+
+	.college-note {
+		margin-bottom: 1.25rem;
 	}
 
 	.contact-links {

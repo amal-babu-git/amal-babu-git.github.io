@@ -37,57 +37,37 @@ const openSource: System[] = [
 		],
 	},
 	{
-		id: "fastapi-admin-cli",
-		name: "fastapi-admin-cli",
+		id: "deployctl",
+		name: "deployctl",
 		summary:
-			"A Django-inspired command-line tool for FastAPI. It scaffolds projects with a clean modular structure and handles the routine work around them.",
-		decisionsHeading: "What it does",
+			"A deployment tool I built for Hybrid Interactive, now open source. It takes a containerized app to one server, or to several behind a load balancer, and needs nothing on the servers but Docker and SSH. Once a project is set up, a release is a merge: GitHub Actions runs deployctl on every push to the deploy branch. The same commands work from a laptop, and a local control panel takes a new project through its first deployment.",
+		decisionsHeading: "Design decisions",
 		decisions: [
-			"Creates a structured FastAPI project with one command",
-			"Generates new modular apps inside a project",
-			"Builds and runs Docker containers, and opens a shell inside them",
-			"Runs Alembic database migrations",
+			"Nothing is built on a server. CI builds the image and pushes it to a registry, and hosts pull one immutable tag, which is also what makes a rollback possible",
+			"Rolling deploys, primary first, with each host gated on a health check and a watch on every service. If a host fails, it and every host already updated go back to the previous release, so the fleet is never left split between two",
+			"A single server is a cluster of one. Both share one code path and differ only in the number of hosts, where TLS ends, and whether Postgres and Redis run in containers",
+			"Migrations run once, on the primary, before any app container restarts, and the scheduler runs on exactly one host so no job fires twice",
+			"One lock per environment, shared by CI and laptops, so two deploys can never interleave",
+			"The control panel listens on 127.0.0.1 only, can trigger nothing outside a fixed list of actions, and shows the exact command behind every button",
 		],
-		builtWith: "Python, Typer, Docker, Alembic",
+		builtWith: "Python, Typer, FastAPI, Jinja2, Bash, Docker Compose, GitHub Actions",
 		links: [
-			{ name: "GitHub", url: "https://github.com/amal-babu-git/fastapi-admin-cli" },
-			{ name: "Documentation", url: "https://amal-babu-git.github.io/fastapi-admin-cli-docs/" },
-			{ name: "PyPI", url: "https://pypi.org/project/fastapi-admin-cli/" },
+			{ name: "GitHub", url: "https://github.com/hybridinteract/deployctl" },
+			{ name: "Documentation", url: "https://github.com/hybridinteract/deployctl/tree/main/docs" },
 		],
 	},
 ];
 
-const earlier = [
-	{
-		name: "OnShop",
-		summary:
-			"An e-commerce platform for a hypermarket with an integrated payment gateway. Django and React, deployed on AWS EC2 with Docker and HTTPS through Certbot.",
-		link: { name: "View demo", url: "https://onshopweb.web.app/" },
-	},
-	{
-		name: "Food donation system",
-		summary:
-			"Connects food donors with NGOs to reduce food waste. Django REST Framework on the backend, React, Redux and Tailwind CSS on the frontend.",
-		link: { name: "GitHub", url: "https://github.com/amal-babu-git/food-donation-system" },
-	},
-	{
-		name: "CGPA and SGPA calculator",
-		summary:
-			"Helps VTU students calculate their SGPA and CGPA. Built for search visibility, and used by over 2,000 students.",
-		link: { name: "Open the calculator", url: "https://cgpa-sgpa.web.app/" },
-	},
-];
 ---
 
 <PageLayout
 	title="Systems"
-	description="Open-source tools by Amal Babu for structuring FastAPI backends, plus research and earlier projects."
+	description="Open-source tools by Amal Babu for starting and deploying backends."
 >
 	<header class="page-head">
 		<h1 class="page-title font-display">Systems</h1>
 		<p class="page-lead">
-			Open-source tools for structuring FastAPI backends, my research, and
-			the projects that came before them.
+			Open-source tools for starting and deploying backends.
 		</p>
 	</header>
 
@@ -135,76 +115,6 @@ const earlier = [
 					</article>
 				))
 			}
-		</div>
-	</section>
-
-	<section
-		class="band"
-		aria-labelledby="research"
-	>
-		<h2
-			id="research"
-			class="band-name"
-		>
-			Research
-		</h2>
-		<article
-			id="skimlit"
-			class="system"
-		>
-			<h3 class="system-name font-display">SkimLit</h3>
-			<p>
-				An NLP model that classifies the sentences of medical abstracts into
-				objectives, methods and conclusions. Published as a research paper in
-				IJRAR.
-			</p>
-			<p class="built-with">
-				<span class="muted">Built with</span> TensorFlow, scikit-learn, React,
-				Docker
-			</p>
-			<p class="link-row">
-				<a
-					class="text-link"
-					href="https://www.ijrar.org/papers/IJRAR1DUP049.pdf">Read the paper</a
-				>
-			</p>
-		</article>
-	</section>
-
-	<section
-		class="band"
-		aria-labelledby="earlier"
-	>
-		<h2
-			id="earlier"
-			class="band-name"
-		>
-			Earlier projects
-		</h2>
-		<div>
-			<ul class="earlier">
-				{
-					earlier.map((project) => (
-						<li>
-							<h3 class="earlier-name">{project.name}</h3>
-							<p class="muted">{project.summary}</p>
-							<a
-								class="text-link"
-								href={project.link.url}
-							>
-								{project.link.name}
-							</a>
-						</li>
-					))
-				}
-			</ul>
-			<p>
-				Everything else is on
-				<a
-					class="text-link"
-					href="https://github.com/amal-babu-git">GitHub</a
-				>.
-			</p>
 		</div>
 	</section>
 </PageLayout>
@@ -269,21 +179,4 @@ const earlier = [
 		margin-top: 0.75rem;
 	}
 
-	.earlier {
-		list-style: none;
-		margin: 0 0 2rem;
-		padding: 0;
-		display: grid;
-		gap: 1.75rem;
-	}
-
-	.earlier-name {
-		font-size: 1.0625rem;
-		font-weight: 600;
-		margin: 0 0 0.25rem;
-	}
-
-	.earlier .muted {
-		margin-bottom: 0.25rem;
-	}
 </style>

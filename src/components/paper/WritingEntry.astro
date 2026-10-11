@@ -1,6 +1,6 @@
 ---
-// One article in the writing index: number, title, date and reading time,
-// abstract, and the drawing of its example in the margin.
+// One article in a writing list: number (when the list is numbered), title,
+// date and reading time, abstract, and the drawing of its example in the margin.
 import type { CollectionEntry } from "astro:content";
 import PostCover from "../covers/PostCover.astro";
 import { hasCover } from "../covers/covers";
@@ -8,16 +8,16 @@ import { fullDate, readingMinutes } from "../../utils/writing";
 
 interface Props {
 	post: CollectionEntry<"blog">;
-	n: string;
+	n?: string;
 }
 
 const { post, n } = Astro.props;
 const href = `/blog/${post.id}/`;
 ---
 
-<article class="entry">
+<article class:list={["entry", { "entry-unnumbered": !n }]}>
 	<h3 class="entry-title">
-		<span class="entry-n">{n}</span>
+		{n && <span class="entry-n">{n}</span>}
 		<a href={href}>{post.data.title}</a>
 	</h3>
 	<p class="entry-meta">

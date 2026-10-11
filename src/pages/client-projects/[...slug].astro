@@ -1,8 +1,10 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content";
 import ProjectLayout from "../../layouts/ProjectLayout.astro";
+import { PROJECT_PAGES } from "../../utils/projects";
 
 export async function getStaticPaths() {
+	if (!PROJECT_PAGES) return [];
 	const projects = await getCollection("projects");
 	return projects.map((project) => ({
 		params: { slug: project.id },

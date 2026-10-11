@@ -20,3 +20,11 @@ export const ROLES = {
 export type RoleKey = keyof typeof ROLES;
 
 export const newestFirst = (a: Project, b: Project) => b.data.order - a.data.order;
+
+// Detail pages for client projects are paused: the Client projects page
+// describes them all. Set this to true to build and link the detail pages again.
+export const PROJECT_PAGES = false;
+
+// Where a project's title links: its own page, or its entry on the index.
+export const projectHref = (project: Project) =>
+	PROJECT_PAGES ? `/client-projects/${project.id}/` : `/client-projects/#${project.id}`;

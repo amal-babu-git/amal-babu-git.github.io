@@ -14,9 +14,8 @@ const blog = defineCollection({
 		authors: z.array(z.string()).optional().default(["amal-babu-git"]),
 		heroImage: z.string().optional(),
 		subcategory: z.string().optional(),
+		// Listed in the homepage's Writing section (up to three, newest first).
 		featured: z.boolean().optional(),
-		// Shown first in the homepage's Writing section, ahead of featured posts.
-		pinned: z.boolean().optional(),
 	}),
 });
 

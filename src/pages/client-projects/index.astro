@@ -5,7 +5,7 @@
 import PaperLayout, { type ContentsItem } from "../../layouts/PaperLayout.astro";
 import ProjectEntry from "../../components/paper/ProjectEntry.astro";
 import { getCollection } from "astro:content";
-import { newestFirst } from "../../utils/projects";
+import { PROJECT_PAGES, newestFirst } from "../../utils/projects";
 
 const projects = (await getCollection("projects")).sort(newestFirst);
 const domains = new Set(projects.map((project) => project.data.domain));
@@ -66,9 +66,9 @@ const contents: ContentsItem[] = [
 			closely and formulating the optimal solution through our software.
 		</p>
 		<p>
-			Each write-up below covers what the system does, the stack it runs on, and
-			some of the decisions behind its design. Client names are left out because
-			the work is confidential.
+			Each entry below covers what the system does and the stack it runs on{
+				PROJECT_PAGES && ", and links to a fuller write-up with some of the decisions behind its design"
+			}. Client names are left out because the work is confidential.
 		</p>
 	</section>
 

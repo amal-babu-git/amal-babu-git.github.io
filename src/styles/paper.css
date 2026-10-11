@@ -736,19 +736,24 @@
   margin: 0 0 0 2.75rem;
 }
 
-/* Client projects index: unnumbered entries, with the stack under each
-   abstract. */
-.project-entry .entry-title {
+/* Unnumbered entries (the client projects index, the homepage's writing
+   list): title, meta and abstract share one left edge. */
+:is(.project-entry, .entry-unnumbered) .entry-title {
   display: block;
+}
+
+.paper :is(.project-entry, .entry-unnumbered) :is(.entry-meta, .entry-abstract) {
+  margin-left: 0;
+}
+
+/* The homepage links each project to its entry on the index. */
+.project-entry {
+  scroll-margin-top: 1.5rem;
 }
 
 .paper .entry-stack {
   margin: 0.5rem 0 0;
   font-size: 0.875rem;
-}
-
-.paper .project-entry :is(.entry-meta, .entry-abstract) {
-  margin-left: 0;
 }
 
 @media (max-width: 559px) {
