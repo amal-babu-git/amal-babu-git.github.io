@@ -1,6 +1,7 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
 import CareerTrace from "../components/CareerTrace.astro";
+import GitHubActivity from "../components/GitHubActivity.astro";
 import { SOCIAL_LINKS, RESUME_URL } from "../consts";
 
 const roles = [
@@ -201,6 +202,20 @@ const certifications = [
 			}
 		</ol>
 		</div>
+	</section>
+
+	<section
+		id="github"
+		class="band"
+		aria-labelledby="github-heading"
+	>
+		<h2
+			id="github-heading"
+			class="band-name"
+		>
+			GitHub
+		</h2>
+		<GitHubActivity />
 	</section>
 
 	<section

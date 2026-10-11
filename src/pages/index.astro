@@ -1,10 +1,11 @@
 ---
 // The homepage, structured like a short research paper that introduces the
 // author: an abstract that states the approach, then writing (§1), client
-// projects (§2) and open source (§3), each summarized and linked
+// projects (§2), open source (§3) and GitHub activity (§4), each summarized and linked
 // to the full page. References index the site; About has the work history.
 import PaperLayout from "../layouts/PaperLayout.astro";
 import SystemDiagram from "../components/SystemDiagram.astro";
+import GitHubActivity from "../components/GitHubActivity.astro";
 import WritingEntry from "../components/paper/WritingEntry.astro";
 import Cite from "../components/paper/Cite.astro";
 import RefNote from "../components/paper/RefNote.astro";
@@ -12,6 +13,8 @@ import { getCollection } from "astro:content";
 import { SOCIAL_LINKS, RESUME_URL, SITE_URL, SITE_DESCRIPTION } from "../consts";
 import { PROJECT_PAGES, ROLES, newestFirst, projectHref } from "../utils/projects";
 import { byNewest } from "../utils/writing";
+import { getContributions } from "../utils/github-contributions.mjs";
+import contributionsSnapshot from "../data/github-contributions.json";
 
 const APPROACH = "coding-and-development/structure-first-business-software";
 
@@ -28,6 +31,10 @@ const monthYear = (date: Date) =>
 // The Writing page has them all.
 const WRITING_LIMIT = 3;
 const shownPosts = posts.filter((post) => post.data.featured).slice(0, WRITING_LIMIT);
+
+// §4 says where the activity is when most of it can't be seen in public.
+const contributions = await getContributions(process.env.GITHUB_TOKEN, contributionsSnapshot);
+const mostlyPrivate = contributions.private > contributions.total / 2;
 
 const NUMBER_WORDS = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
 const inWords = (n: number) => NUMBER_WORDS[n] ?? String(n);
@@ -104,6 +111,7 @@ const contents = [
 	{ id: "writing", n: "1", label: "Writing" },
 	{ id: "client-projects", n: "2", label: "Client projects" },
 	{ id: "open-source", n: "3", label: "Open source" },
+	{ id: "activity", n: "4", label: "Activity" },
 	{ id: "correspondence", label: "Correspondence" },
 	{ id: "references", label: "References" },
 	{ id: "cite", label: "Cite this page" },
@@ -356,6 +364,26 @@ const published = [
 				</table>
 			</div>
 		</div>
+	</section>
+
+	<section id="activity">
+		<h2 class="sec-title">
+			<span class="sec-n">4</span>Activity
+		</h2>
+		<p>
+			My GitHub activity over the last year.{
+				mostlyPrivate && (
+					<>
+						{" "}
+						Most of it is in the private repositories of the client systems in <a
+							class="xref"
+							href="#client-projects">§2</a
+						>, so the code itself isn't public.
+					</>
+				)
+			}
+		</p>
+		<GitHubActivity />
 	</section>
 
 	<section
