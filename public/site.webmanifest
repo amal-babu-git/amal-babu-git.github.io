@@ -1,7 +1,7 @@
 {
-	"name": "Amal Babu · ABK Datalab",
-	"short_name": "ABK Datalab",
-	"description": "Insights and tutorials on Python, FastAPI, React, Machine Learning, and AI technologies",
+	"name": "Amal Babu",
+	"short_name": "Amal Babu",
+	"description": "Amal Babu is a full-stack developer and tech lead in Kochi, India, building scalable business software, including ERP and CRM systems, with AI where it helps.",
 	"icons": [
 		{
 			"src": "/android-chrome-192x192.png",
@@ -14,8 +14,8 @@
 			"type": "image/png"
 		}
 	],
-	"theme_color": "#ffffff",
-	"background_color": "#ffffff",
+	"theme_color": "#f5f7f7",
+	"background_color": "#f5f7f7",
 	"display": "standalone",
 	"start_url": "/"
 }

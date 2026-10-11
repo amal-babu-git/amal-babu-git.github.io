@@ -9,7 +9,7 @@ import WritingEntry from "../components/paper/WritingEntry.astro";
 import Cite from "../components/paper/Cite.astro";
 import RefNote from "../components/paper/RefNote.astro";
 import { getCollection } from "astro:content";
-import { SOCIAL_LINKS, RESUME_URL, SITE_URL, SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { SOCIAL_LINKS, RESUME_URL, SITE_URL, SITE_DESCRIPTION } from "../consts";
 import { PROJECT_PAGES, ROLES, newestFirst, projectHref } from "../utils/projects";
 import { byNewest } from "../utils/writing";
 
@@ -97,7 +97,7 @@ const bibtex = `@misc{babu${REVISED.getFullYear()}business,
   howpublished = {\\url{${pageUrl}}}
 }`;
 
-const PAGE_TITLE = `${SITE_TITLE} | Full-stack developer and tech lead`;
+const PAGE_TITLE = "Amal Babu, full-stack developer and tech lead with applied AI";
 
 const contents = [
 	{ id: "abstract", label: "Abstract" },
@@ -130,12 +130,6 @@ const published = [
 	description={SITE_DESCRIPTION}
 	contents={contents}
 >
-	<meta
-		slot="head"
-		name="keywords"
-		content="Amal Babu, Full-Stack Developer, Tech Lead, Software Architecture, System Design, Business Software, FastAPI, Django, Next.js, PostgreSQL, AI Integration, Pydantic AI, LangGraph"
-	/>
-
 	<header
 		slot="front"
 		class="front"

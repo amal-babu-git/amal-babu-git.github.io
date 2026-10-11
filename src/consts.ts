@@ -3,11 +3,11 @@
 
 export const SITE_TITLE = "Amal Babu · ABK DataLab";
 export const SITE_DESCRIPTION =
-	"Amal Babu is a full-stack software developer and tech lead in Kochi, India, building scalable business software, including ERP and CRM systems, with AI where it does useful work.";
+	"Amal Babu is a full-stack developer and tech lead in Kochi, India, building scalable business software, including ERP and CRM systems, with AI where it helps.";
 export const SITE_URL = "https://amal-babu-git.github.io"; // Replace with your actual domain
 export const AUTHOR = "Amal Babu";
 export const KEYWORDS =
-	"Software Engineer, Tech Writer, Amal Babu, ABK DataLab, Full-Stack Developer, Next.js Expert, TypeScript Development, React Developer, Python Developer, FastAPI, Machine Learning Engineer, AI Developer, Gen AI Developer, Systems Architecture, API Development, Artificial Intelligence, ComfyUI, Open Source";
+	"Amal Babu, Full-Stack Developer, Tech Lead, Software Architecture, System Design, Business Software, ERP, CRM, FastAPI, Django, Next.js, PostgreSQL, AI Integration, Pydantic AI, LangGraph";
 export const SOCIAL_LINKS = {
 	github: "https://github.com/amal-babu-git",
 	linkedin: "https://www.linkedin.com/in/amalbabudev",

@@ -20,16 +20,22 @@ interface Props {
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || SITE_URL);
+const DEFAULT_IMAGE = "/images/site-og-image.jpg";
 const {
 	title,
 	description,
-	image = "/images/site-og-image.jpg",
+	image = DEFAULT_IMAGE,
 	article = false,
 	keywords = KEYWORDS,
 } = Astro.props;
 
-// A title that already names the site isn't suffixed with it again.
-const fullTitle = title.includes(SITE_TITLE) ? title : `${title} | ${SITE_TITLE}`;
+// The default social image's size and alt text are known; a post's own image isn't.
+const isDefaultImage = image === DEFAULT_IMAGE;
+
+// A title that already names the site or leads with the author's name isn't
+// suffixed with the site name again.
+const fullTitle =
+	title.includes(SITE_TITLE) || title.startsWith(AUTHOR) ? title : `${title} | ${SITE_TITLE}`;
 
 // Structured data (schema.org) for search engines: who the author is, and
 // what the site is. Kept in step with the About page.
@@ -223,6 +229,24 @@ const website = {
 	property="og:image"
 	content={new URL(image, Astro.site || SITE_URL)}
 />
+{
+	isDefaultImage && (
+		<>
+			<meta
+				property="og:image:width"
+				content="1200"
+			/>
+			<meta
+				property="og:image:height"
+				content="630"
+			/>
+			<meta
+				property="og:image:alt"
+				content="Amal Babu: software architecture, business systems and applied AI"
+			/>
+		</>
+	)
+}
 <meta
 	property="og:site_name"
 	content={SITE_TITLE}
